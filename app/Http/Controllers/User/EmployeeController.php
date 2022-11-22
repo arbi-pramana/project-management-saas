@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Http\Controllers\User;
+
+use App\Http\Controllers\Controller;
+use App\Models\Department;
+use App\Models\Employee;
+use App\Models\EmployeeType;
+use App\Services\Users\EmployeeService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class EmployeeController extends Controller
+{
+    protected $employee;
+    public function __construct(EmployeeService $employee)
+    {
+        $this->employee = $employee;
+    }
+
+    public function index()
+    {
+        $data['employees'] = Employee::where('create_by',Auth::guard('users')->id())->get();
+        $data['emp_types'] = EmployeeType::where('create_by',Auth::guard('users')->id())->get();
+        $data['departments'] = Department::where('create_by',Auth::guard('users')->id())->get();
+        return view('users.employee.index',$data);
+    }
+
+    public function store(Request $request)
+    {
+        $this->employee->store($request);
+        return redirect()->back()->with('success','Data has been Added');
+    }
+
+    public function update(Request $request)
+    {
+        $this->employee->update($request);
+        return redirect()->back()->with('success','Data has been Added');
+    }
+
+    public function destroy(Request $request)
+    {
+        Employee::find($request->id)->delete();
+        return redirect()->back()->with('danger','Data has been Deleted');
+    }
+}
