@@ -8,10 +8,10 @@ use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\User\RegisterController;
 use App\Http\Controllers\User\ClientController;
 use App\Http\Controllers\User\ProjectController;
-use App\Http\Controllers\Users\ExpenseController;
-use App\Http\Controllers\Users\IncomeController;
-use App\Http\Controllers\Users\MilestoneController;
-use App\Http\Controllers\Users\TaskController;
+use App\Http\Controllers\User\ExpenseController;
+use App\Http\Controllers\User\IncomeController;
+use App\Http\Controllers\User\MilestoneController;
+use App\Http\Controllers\User\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,6 +57,9 @@ Route::group(['middleware'=>'users.auth','prefix'=>'users'],function(){
         Route::put('/',ProjectController::class.'@update')->name('users.project.update');
         Route::delete('/',ProjectController::class.'@destroy')->name('users.project.destroy');
         Route::get('/{id}/milestone',MilestoneController::class.'@index')->name('users.milestone.index');
+        Route::post('/{id}/milestone',MilestoneController::class.'@store')->name('users.milestone.store');
+        Route::put('/{id}/milestone',MilestoneController::class.'@update')->name('users.milestone.update');
+        Route::delete('/{id}/milestone',MilestoneController::class.'@destroy')->name('users.milestone.destroy');
         Route::get('/{id}/task',TaskController::class.'@index')->name('users.task.index');
         Route::get('/{id}/income',IncomeController::class.'@index')->name('users.income.index');
         Route::get('/{id}/expense',ExpenseController::class.'@index')->name('users.expense.index');
