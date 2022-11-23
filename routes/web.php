@@ -63,6 +63,9 @@ Route::group(['middleware'=>'users.auth','prefix'=>'users'],function(){
         Route::delete('/{id}/milestone',MilestoneController::class.'@destroy')->name('users.milestone.destroy');
         // task
         Route::get('/{id}/task',TaskController::class.'@index')->name('users.task.index');
+        Route::post('/{id}/task',TaskController::class.'@store')->name('users.task.store');
+        Route::put('/{id}/task',TaskController::class.'@update')->name('users.task.update');
+        Route::delete('/{id}/task',TaskController::class.'@destroy')->name('users.task.destroy');
         // income
         Route::get('/{id}/income',IncomeController::class.'@index')->name('users.income.index');
         Route::post('/{id}/income',IncomeController::class.'@store')->name('users.income.store');
