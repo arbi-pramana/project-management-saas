@@ -56,12 +56,19 @@ Route::group(['middleware'=>'users.auth','prefix'=>'users'],function(){
         Route::post('/',ProjectController::class.'@store')->name('users.project.store');
         Route::put('/',ProjectController::class.'@update')->name('users.project.update');
         Route::delete('/',ProjectController::class.'@destroy')->name('users.project.destroy');
+        // milestone
         Route::get('/{id}/milestone',MilestoneController::class.'@index')->name('users.milestone.index');
         Route::post('/{id}/milestone',MilestoneController::class.'@store')->name('users.milestone.store');
         Route::put('/{id}/milestone',MilestoneController::class.'@update')->name('users.milestone.update');
         Route::delete('/{id}/milestone',MilestoneController::class.'@destroy')->name('users.milestone.destroy');
+        // task
         Route::get('/{id}/task',TaskController::class.'@index')->name('users.task.index');
+        // income
         Route::get('/{id}/income',IncomeController::class.'@index')->name('users.income.index');
+        Route::post('/{id}/income',IncomeController::class.'@store')->name('users.income.store');
+        Route::put('/{id}/income',IncomeController::class.'@update')->name('users.income.update');
+        Route::delete('/{id}/income',IncomeController::class.'@destroy')->name('users.income.destroy');
+        // expense
         Route::get('/{id}/expense',ExpenseController::class.'@index')->name('users.expense.index');
         Route::post('/{id}/expense',ExpenseController::class.'@store')->name('users.expense.store');
         Route::put('/{id}/expense',ExpenseController::class.'@update')->name('users.expense.update');
