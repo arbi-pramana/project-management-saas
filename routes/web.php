@@ -63,6 +63,9 @@ Route::group(['middleware'=>'users.auth','prefix'=>'users'],function(){
         Route::get('/{id}/task',TaskController::class.'@index')->name('users.task.index');
         Route::get('/{id}/income',IncomeController::class.'@index')->name('users.income.index');
         Route::get('/{id}/expense',ExpenseController::class.'@index')->name('users.expense.index');
+        Route::post('/{id}/expense',ExpenseController::class.'@store')->name('users.expense.store');
+        Route::put('/{id}/expense',ExpenseController::class.'@update')->name('users.expense.update');
+        Route::delete('/{id}/expense',ExpenseController::class.'@destroy')->name('users.expense.destroy');
     });
 
     Route::group(['prefix'=>'department'],function(){

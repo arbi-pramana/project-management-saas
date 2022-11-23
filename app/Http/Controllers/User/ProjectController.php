@@ -35,6 +35,11 @@ class ProjectController extends Controller
     public function detail($id)
     {
         $data['project'] = Project::find($id);
+        $data['managers'] = Employee::where('create_by',Auth::guard('users')->id())->get();
+        $data['clients'] = Client::where('create_by',Auth::guard('users')->id())->get();
+        $data['complexitys'] = Complexity::get();
+        $data['prioritys'] = Priority::get();
+        $data['statuss'] = Status::get();
         return view('users.project.detail',$data);
     }
 
@@ -53,6 +58,6 @@ class ProjectController extends Controller
     public function destroy(Request $request)
     {
         Project::find($request->id)->delete();
-        return redirect()->back()->with('danger','Data has been Deleted');
+        return redirect('users/project')->with('danger','Data has been Deleted');
     }
 }

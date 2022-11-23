@@ -33,7 +33,7 @@ class MilestoneController extends Controller
     public function update(Request $request)
     {
         $this->milestone->update($request);
-        return redirect()->back()->with('success','Data has been Added');
+        return redirect()->back()->with('success','Data has been Updated');
     }
 
     public function destroy(Request $request)
