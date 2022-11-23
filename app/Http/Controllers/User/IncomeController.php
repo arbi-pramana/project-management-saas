@@ -19,7 +19,7 @@ class IncomeController extends Controller
     public function index($id)
     {
         $data['project'] = Project::find($id);
-        $data['incomes'] = Income::where('project_id',$id)->get();
+        $data['incomes'] = Income::where('project_id',$id)->orderBy('date','DESC')->get();
         return view('users.income.index',$data);
     }
 

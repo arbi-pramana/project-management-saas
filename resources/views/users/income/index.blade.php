@@ -4,7 +4,8 @@
     <div class="container-fluid">
         <div class="page-titles">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Data Master</a></li>
+                <li class="breadcrumb-item"><a href="#">Project</a></li>
+                <li class="breadcrumb-item"><a href="{{url('/users/project/'.$project->id.'/detail')}}">{{$project->name}}</a></li>
                 <li class="breadcrumb-item active"><a href="#">Income</a></li>
             </ol>
         </div>

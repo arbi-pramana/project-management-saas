@@ -19,7 +19,7 @@ class ExpenseController extends Controller
     public function index($id)
     {
         $data['project'] = Project::find($id);
-        $data['expenses'] = Expense::where('project_id',$id)->get();
+        $data['expenses'] = Expense::where('project_id',$id)->orderBy('date','DESC')->get();
         return view('users.expense.index',$data);
     }
 
