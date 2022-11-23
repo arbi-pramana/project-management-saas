@@ -112,6 +112,99 @@
                 </a>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="fs-14 mb-1">OVERALL PROGRESS</p>
+                                <span class="fs-35 text-black font-w600">856
+                                    <svg class="ml-1" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2.00401 11.1924C0.222201 11.1924 -0.670134 9.0381 0.589795 7.77817L7.78218 0.585786C8.56323 -0.195262 9.82956 -0.195262 10.6106 0.585786L17.803 7.77817C19.0629 9.0381 18.1706 11.1924 16.3888 11.1924H2.00401Z" fill="#33C25B"/>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="d-inline-block ml-auto position-relative donut-chart-sale">
+                                <span class="donut" data-peity='{ "fill": ["rgb(254, 99, 78)", "rgba(244, 244, 244, 1)"],   "innerRadius": 31, "radius": 20}'>8/8</span>
+                                <small class="text-secondary">90%</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="fs-14 mb-1">
+                                    PROJECT TASKS <br>
+                                    <h5>9 OF 12 TASKS COMPLETED</h5>
+                                </p>
+                            </div>
+                            <div class="d-inline-block ml-auto position-relative donut-chart-sale">
+                                <span class="donut" data-peity='{ "fill": ["rgb(254, 99, 78)", "rgba(244, 244, 244, 1)"],   "innerRadius": 31, "radius": 20}'>9/12</span>
+                                <small class="text-secondary">90%</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-end">
+                            <div>
+                                <p class="fs-14 mb-1">HOURS</p>
+                                <span class="fs-35 text-black font-w600">93
+                                </span>
+                            </div>
+                            <canvas class="lineChart" id="hourSpent" height="85"></canvas>
+                            <br>
+                        </div>
+                        <div class="text-center mt-2">
+                            <label class="btn btn-xs btn-success"></label> Plan Hours
+                            <label class="btn btn-xs btn-primary ml-2"></label> Actual Hours
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        PROJECT BUDGET <br>
+                        <h2>Rp. x.xxx.xxx</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        INCOMES <br>
+                        <h2>Rp. x.xxx.xxx</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        REMAINING <br>
+                        <h2>Rp. x.xxx.xxx</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        EXPENSES <br>
+                        <h2>Rp. x.xxx.xxx</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -231,5 +324,63 @@
         $('#deleteModal').modal('show')
         $("#delete-id").val(id)
     }
+</script>
+<script>
+    const hourSpent = document.getElementById("hourSpent").getContext('2d');
+    //generate gradient
+    const hourSpentgradientStroke = hourSpent.createLinearGradient(250, 0, 0, 0);
+    hourSpentgradientStroke.addColorStop(1, "#EA7A9A");
+    hourSpentgradientStroke.addColorStop(0, "#FAC7B6");
+
+    // hourSpent.attr('height', '100');
+
+    new Chart(hourSpent, {
+        type: 'bar',
+        data: {
+            defaultFontFamily: 'Poppins',
+            labels: ["PLAN HOURS", "HOURS SPENT"],
+            datasets: [
+                {
+                    data: [100, 40],
+                    borderColor: ['#2BC155','#FE634E'],
+                    borderWidth: "0",
+                    backgroundColor: ['#2BC155','#FE634E'], 
+                    hoverBackgroundColor: ['#2BC155','#FE634E']
+                }
+            ]
+        },
+        options: {
+            legend: false,
+            responsive: true, 
+            maintainAspectRatio: false,  
+            scales: {
+                yAxes: [{
+                    display: false, 
+                    ticks: {
+                        beginAtZero: true, 
+                        display: false, 
+                        max: 100, 
+                        min: 0, 
+                        stepSize: 10
+                    }, 
+                    gridLines: {
+                        display: false, 
+                        drawBorder: false
+                    }
+                }],
+                xAxes: [{
+                    display: false, 
+                    barPercentage: 0.4, 
+                    gridLines: {
+                        display: false, 
+                        drawBorder: false
+                    }, 
+                    ticks: {
+                        display: false
+                    }
+                }]
+            }
+        }
+    });
 </script>
 @stop
