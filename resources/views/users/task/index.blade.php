@@ -111,14 +111,14 @@
                 <input type="text" class="form-control" name="wbs_code" required>
                 <br>
                 <label for="">Milestone</label>
-                <select name="milestone_id" class="form-control">
+                <select name="milestone_id" class="form-control" required>
                     @foreach($milestones as $milestone)
                         <option value="{{$milestone->id}}">{{$milestone->name}}</option>
                     @endforeach
                 </select>
                 <br>
                 <label for="">Employee</label>
-                <select name="employee_id" class="form-control">
+                <select name="employee_id" class="form-control" required>
                     @foreach($employees as $employee)
                         <option value="{{$employee->id}}">{{$employee->name}}</option>
                     @endforeach
@@ -134,7 +134,7 @@
                 <input type="date" class="form-control" name="end_date" required>
                 <br>
                 <label for="">Status</label>
-                <select name="status_id" class="form-control">
+                <select name="status_id" class="form-control" required>
                     @foreach($statuss as $status)
                         <option value="{{$status->id}}">{{$status->name}}</option>
                     @endforeach
