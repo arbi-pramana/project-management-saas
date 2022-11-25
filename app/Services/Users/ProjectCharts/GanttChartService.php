@@ -12,7 +12,15 @@ class GanttChartService{
                 $data['name'] = $q->name;
                 $data['start'] = $q->start_date;
                 $data['end'] = $q->end_date;
-                $data['progress'] = 100;
+                if($q->status_id == 1){
+                    $data['progress'] = 0;
+                } else if($q->status_id == 2){
+                    $data['progress'] = 50;
+                } else if($q->status_id == 3){
+                    $data['progress'] = 100;
+                } else {
+                    $data['progress'] = 0;
+                }
                 return $data;
             });
         return $data;

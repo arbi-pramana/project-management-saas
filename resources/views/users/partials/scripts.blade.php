@@ -62,5 +62,10 @@
 <script src="{{url('acara/vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{url('acara/js/plugins-init/datatables.init.js')}}"></script>
 <script>
-    $(".table").DataTable()
+    $(".table").DataTable({
+        search: {
+            regex: false,
+            smart: false
+        }
+    })
 </script>
