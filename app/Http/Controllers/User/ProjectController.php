@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Services\Users\ProjectCharts\ComplexityChartService;
+use App\Services\Users\ProjectCharts\GanttChartService;
 use App\Services\Users\ProjectCharts\HourChartService;
 use App\Services\Users\ProjectCharts\IncomeExpenseChartService;
 use App\Services\Users\ProjectCharts\PriorityChartService;
@@ -22,6 +23,7 @@ class ProjectController extends Controller
     protected $status_chart;
     protected $priority_chart;
     protected $complexity_chart;
+    protected $gantt_chart;
     public function __construct(
         ProjectService $project, 
         IncomeExpenseChartService $income_expense_chart,
@@ -30,6 +32,7 @@ class ProjectController extends Controller
         StatusChartService $status_chart,
         PriorityChartService $priority_chart,
         ComplexityChartService $complexity_chart,
+        GanttChartService $gantt_chart,
     ){
         $this->project = $project;
         $this->income_expense_chart = $income_expense_chart;
@@ -38,6 +41,7 @@ class ProjectController extends Controller
         $this->status_chart = $status_chart;
         $this->priority_chart = $priority_chart;
         $this->complexity_chart = $complexity_chart;
+        $this->gantt_chart = $gantt_chart;
     }
 
     public function index()
@@ -55,6 +59,7 @@ class ProjectController extends Controller
         $data['status_chart'] = $this->status_chart->chart($id);
         $data['priority_chart'] = $this->priority_chart->chart($id);
         $data['complexity_chart'] = $this->complexity_chart->chart($id);
+        $data['gantt_chart'] = $this->gantt_chart->chart($id);
         return view('users.project.detail',$data);
     }
 

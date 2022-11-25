@@ -208,6 +208,16 @@
                 </div>
             </div>
         </div>
+        <h3 class="mt-4">PROJECT TIMELINE</h3>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="gantt"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <h3 class="mt-4">INCOME VS EXPENSE</h3>
         <div class="row">
             <div class="col-md-12">
@@ -287,7 +297,6 @@
         </div>
     </div>
 </div>
-
 <!-- Modal Edit -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -384,6 +393,22 @@
 </div>
 @stop
 @section('scripts')
+<script>
+    var tasks = {!! json_encode($gantt_chart['tasks']) !!}
+    var gantt = new Gantt("#gantt", tasks,{
+        header_height: 50,
+        column_width: 30,
+        step: 24,
+        view_modes: ['Quarter Day', 'Half Day', 'Day', 'Week', 'Month'],
+        bar_height: 20,
+        bar_corner_radius: 3,
+        arrow_curve: 5,
+        padding: 18,
+        view_mode: 'Day',
+        date_format: 'YYYY-MM-DD',
+        custom_popup_html: null
+    });
+</script>
 <script>
     function editData(id){
         $('#editModal').modal('show')
