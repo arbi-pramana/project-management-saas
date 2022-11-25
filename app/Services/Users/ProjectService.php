@@ -2,10 +2,39 @@
 namespace App\Services\Users;
 
 use App\Models\Client;
+use App\Models\Complexity;
+use App\Models\Employee;
+use App\Models\Priority;
 use App\Models\Project;
+use App\Models\Status;
+use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 
 class ProjectService{
+    public function index()
+    {
+        $data['projects'] = Project::where('create_by',Auth::guard('users')->id())->get();
+        $data['managers'] = Employee::where('create_by',Auth::guard('users')->id())->get();
+        $data['clients'] = Client::where('create_by',Auth::guard('users')->id())->get();
+        $data['complexitys'] = Complexity::get();
+        $data['prioritys'] = Priority::get();
+        $data['statuss'] = Status::get();
+        return $data;
+    }
+    
+    public function detail($id)
+    {
+        $data['project'] = Project::find($id);
+        $data['managers'] = Employee::where('create_by',Auth::guard('users')->id())->get();
+        $data['clients'] = Client::where('create_by',Auth::guard('users')->id())->get();
+        $data['complexitys'] = Complexity::get();
+        $data['prioritys'] = Priority::get();
+        $data['statuss'] = Status::get();
+        $data['tasks'] = Task::where('project_id',$id)->get();
+        $data['task_complete'] = $data['tasks']->where('status_id',3); 
+        return $data;
+    }
+
     public function store($request)
     {
         $project = new Project();

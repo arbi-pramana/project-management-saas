@@ -119,15 +119,17 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <p class="fs-14 mb-1">OVERALL PROGRESS</p>
-                                <span class="fs-35 text-black font-w600">856
-                                    <svg class="ml-1" width="19" height="12" viewBox="0 0 19 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2.00401 11.1924C0.222201 11.1924 -0.670134 9.0381 0.589795 7.77817L7.78218 0.585786C8.56323 -0.195262 9.82956 -0.195262 10.6106 0.585786L17.803 7.77817C19.0629 9.0381 18.1706 11.1924 16.3888 11.1924H2.00401Z" fill="#33C25B"/>
-                                    </svg>
+                                <span class="fs-35 text-black font-w600">
+                                    @if(count($tasks) >= 1)
+                                        {{number_format(count($task_complete)/count($tasks)*100,0)}} %
+                                    @else
+                                        0 %
+                                    @endif
                                 </span>
                             </div>
                             <div class="d-inline-block ml-auto position-relative donut-chart-sale">
-                                <span class="donut" data-peity='{ "fill": ["rgb(254, 99, 78)", "rgba(244, 244, 244, 1)"],   "innerRadius": 31, "radius": 20}'>8/8</span>
-                                <small class="text-secondary">90%</small>
+                                <span class="donut" data-peity='{ "fill": ["rgb(254, 99, 78)", "rgba(244, 244, 244, 1)"],   "innerRadius": 31, "radius": 20}'>{{count($task_complete)}}/{{count($tasks)}}</span>
+                                <small class="text-secondary"></small>
                             </div>
                         </div>
                     </div>
@@ -140,12 +142,12 @@
                             <div>
                                 <p class="fs-14 mb-1">
                                     PROJECT TASKS <br>
-                                    <h5>9 OF 12 TASKS COMPLETED</h5>
+                                    <h5>{{count($task_complete)}} OF {{count($tasks)}} TASKS COMPLETED</h5>
                                 </p>
                             </div>
                             <div class="d-inline-block ml-auto position-relative donut-chart-sale">
-                                <span class="donut" data-peity='{ "fill": ["rgb(254, 99, 78)", "rgba(244, 244, 244, 1)"],   "innerRadius": 31, "radius": 20}'>9/12</span>
-                                <small class="text-secondary">90%</small>
+                                <span class="donut" data-peity='{ "fill": ["rgb(254, 99, 78)", "rgba(244, 244, 244, 1)"],   "innerRadius": 31, "radius": 20}'>{{count($task_complete)}}/{{count($tasks)}}</span>
+                                <small class="text-secondary">{{count($tasks)}}</small>
                             </div>
                         </div>
                     </div>
@@ -157,15 +159,11 @@
                         <div class="d-flex align-items-end">
                             <div>
                                 <p class="fs-14 mb-1">HOURS</p>
-                                <span class="fs-35 text-black font-w600">93
-                                </span>
+                                <label class="btn btn-xs btn-success"></label> Plan Hours <br>
+                                <label class="btn btn-xs btn-primary"></label> Hours Spent
                             </div>
                             <canvas class="lineChart" id="hourSpent" height="85"></canvas>
                             <br>
-                        </div>
-                        <div class="text-center mt-2">
-                            <label class="btn btn-xs btn-success"></label> Plan Hours
-                            <label class="btn btn-xs btn-primary ml-2"></label> Actual Hours
                         </div>
                     </div>
                 </div>
@@ -176,7 +174,7 @@
                 <div class="card">
                     <div class="card-body">
                         PROJECT BUDGET <br>
-                        <h2>Rp. x.xxx.xxx</h2>
+                        <h2>Rp. {{number_format($project->budget,2)}}</h2>
                     </div>
                 </div>
             </div>
@@ -184,7 +182,7 @@
                 <div class="card">
                     <div class="card-body">
                         INCOMES <br>
-                        <h2>Rp. x.xxx.xxx</h2>
+                        <h2>Rp. {{number_format($project->incomes ? $project->incomes->sum('paid') : 0,2)}}</h2>
                     </div>
                 </div>
             </div>
@@ -192,7 +190,12 @@
                 <div class="card">
                     <div class="card-body">
                         REMAINING <br>
-                        <h2>Rp. x.xxx.xxx</h2>
+                        @php
+                            $budget = $project->budget;
+                            $income = $project->incomes ? $project->incomes->sum('paid') : 0;
+                            $remaining = $budget - $income;
+                        @endphp
+                        <h2>Rp. {{number_format($remaining,2)}}</h2>
                     </div>
                 </div>
             </div>
@@ -200,7 +203,84 @@
                 <div class="card">
                     <div class="card-body">
                         EXPENSES <br>
-                        <h2>Rp. x.xxx.xxx</h2>
+                        <h2>Rp. {{number_format($project->expenses ? $project->expenses->sum('amount') : 0,2)}}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h3 class="mt-4">INCOME VS EXPENSE</h3>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body" style="height:500px;padding-bottom:70px">
+                        <canvas id="income_expense_chart" class="chart-js pt-4"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h3 class="mt-4">PLAN HOURS VS HOUR SPENT</h3>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body" style="height:500px;padding-bottom:70px">
+                        <canvas id="hours_chart" class="chart-js pt-4"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h3 class="mt-4">TASKS | RESPONSIBLE</h3>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body" style="height:500px;padding-bottom:70px">
+                        <canvas id="responsible_chart" class="chart-js pt-4"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h3 class="mt-4">PROJECT STATUS REPORT</h3>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        STATUS
+                    </div>
+                    <div class="card-body">
+                        <canvas id="status_chart" class="chart-js" height="350px"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        PRIORITY
+                    </div>
+                    <div class="card-body">
+                        <canvas id="priority_chart" class="chart-js pt-4" height="350px"></canvas>
+                        <div class="row text-center mt-2">
+                            <div class="col-md-4">
+                                Low <br>
+                                <b> {{$priority_chart['value'][0]}} </b>
+                            </div>
+                            <div class="col-md-4">
+                                Medium <br>
+                                <b> {{$priority_chart['value'][1]}} </b>
+                            </div>
+                            <div class="col-md-4">
+                                High <br>
+                                <b> {{$priority_chart['value'][2]}} </b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        COMPLEXITY
+                    </div>
+                    <div class="card-body">
+                        <canvas id="complexity_chart" class="chart-js pt-4" height="350px"></canvas>
                     </div>
                 </div>
             </div>
@@ -333,7 +413,6 @@
     hourSpentgradientStroke.addColorStop(0, "#FAC7B6");
 
     // hourSpent.attr('height', '100');
-
     new Chart(hourSpent, {
         type: 'bar',
         data: {
@@ -341,7 +420,7 @@
             labels: ["PLAN HOURS", "HOURS SPENT"],
             datasets: [
                 {
-                    data: [100, 40],
+                    data: ["{{$tasks->sum('plan_hours')}}","{{$tasks->sum('actual_hours')}}"],
                     borderColor: ['#2BC155','#FE634E'],
                     borderWidth: "0",
                     backgroundColor: ['#2BC155','#FE634E'], 
@@ -359,9 +438,9 @@
                     ticks: {
                         beginAtZero: true, 
                         display: false, 
-                        max: 100, 
-                        min: 0, 
-                        stepSize: 10
+                        // max: 100, 
+                        // min: 0, 
+                        // stepSize: 10
                     }, 
                     gridLines: {
                         display: false, 
@@ -382,5 +461,345 @@
             }
         }
     });
+</script>
+<script>
+    var labels = {!! json_encode($income_expense_chart['label']) !!}
+    var income_value = {!! json_encode($income_expense_chart['income_value']) !!}
+    var expense_value = {!! json_encode($income_expense_chart['expense_value']) !!}
+    var income_expense_chart = document.getElementById("income_expense_chart");
+    var config = {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Income",
+                    data:  income_value,
+                    backgroundColor: '#2BC155'
+                    
+                },
+                {
+                    label: "Expense",
+                    data: expense_value,
+                    backgroundColor: 'rgba(254, 99, 78, 1)'
+                    
+                }
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            elements: {
+                    point:{
+                        radius: 0
+                    }
+            },
+            // legend:false,
+            
+            scales: {
+                yAxes: [{
+                    gridLines: {
+                        drawBorder: true
+                    },
+                    ticks: {
+                        fontColor: "#999",
+                        beginAtZero: true
+                    },
+                }],
+                xAxes: [{
+                    gridLines: {
+                        display: false,
+                        zeroLineColor: "transparent"
+                    },
+                    ticks: {
+                        stepSize: 5,
+                        fontColor: "#999",
+                        fontFamily: "Nunito, sans-serif"
+                    }
+                }]
+            },
+            tooltips: {
+                enabled: true,
+                mode: "index",
+                intersect: false,
+                titleFontColor: "#888",
+                bodyFontColor: "#555",
+                titleFontSize: 12,
+                bodyFontSize: 15,
+                backgroundColor: "rgba(256,256,256,0.95)",
+                displayColors: true,
+                xPadding: 10,
+                yPadding: 7,
+                // borderColor: "rgba(220, 220, 220, 0.9)",
+                borderWidth: 0,
+                caretSize: 6,
+                caretPadding: 10
+            }
+        }
+    };
+
+    var ctx = document.getElementById("income_expense_chart").getContext("2d");
+    var myLine = new Chart(ctx, config);
+</script>
+<script>
+    var labels = {!! json_encode($hours_chart['label']) !!}
+    var plan_hours = {!! json_encode($hours_chart['plan_hours']) !!}
+    var actual_hours = {!! json_encode($hours_chart['actual_hours']) !!}
+    var hours_chart = document.getElementById("hours_chart");
+    var config = {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Plan Hours",
+                    data:  plan_hours,
+                    backgroundColor: '#2BC155'
+                    
+                },
+                {
+                    label: "Hour Spent",
+                    data: actual_hours,
+                    backgroundColor: 'rgba(254, 99, 78, 1)'
+                    
+                }
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            elements: {
+                    point:{
+                        radius: 0
+                    }
+            },
+            // legend:false,
+            
+            scales: {
+                yAxes: [{
+                    gridLines: {
+                        drawBorder: true
+                    },
+                    ticks: {
+                        fontColor: "#999",
+                        beginAtZero: true
+                    },
+                }],
+                xAxes: [{
+                    gridLines: {
+                        display: false,
+                        zeroLineColor: "transparent"
+                    },
+                    ticks: {
+                        stepSize: 5,
+                        fontColor: "#999",
+                        fontFamily: "Nunito, sans-serif"
+                    }
+                }]
+            },
+            tooltips: {
+                enabled: true,
+                mode: "index",
+                intersect: false,
+                titleFontColor: "#888",
+                bodyFontColor: "#555",
+                titleFontSize: 12,
+                bodyFontSize: 15,
+                backgroundColor: "rgba(256,256,256,0.95)",
+                displayColors: true,
+                xPadding: 10,
+                yPadding: 7,
+                // borderColor: "rgba(220, 220, 220, 0.9)",
+                borderWidth: 0,
+                caretSize: 6,
+                caretPadding: 10
+            }
+        }
+    };
+
+    var ctx = document.getElementById("hours_chart").getContext("2d");
+    var myLine = new Chart(ctx, config);
+</script>
+<script>
+    var labels = {!! json_encode($responsible_chart['label']) !!}
+    var plan_task = {!! json_encode($responsible_chart['plan_task']) !!}
+    var completed_task = {!! json_encode($responsible_chart['completed_task']) !!}
+    var hours_chart = document.getElementById("hours_chart");
+    var config = {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Plan Task",
+                    data:  plan_task,
+                    backgroundColor: '#2BC155'
+                    
+                },
+                {
+                    label: "Completed Task",
+                    data: completed_task,
+                    backgroundColor: 'rgba(254, 99, 78, 1)'
+                    
+                }
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            elements: {
+                    point:{
+                        radius: 0
+                    }
+            },
+            // legend:false,
+            
+            scales: {
+                yAxes: [{
+                    gridLines: {
+                        drawBorder: true
+                    },
+                    ticks: {
+                        fontColor: "#999",
+                        beginAtZero: true
+                    },
+                }],
+                xAxes: [{
+                    gridLines: {
+                        display: false,
+                        zeroLineColor: "transparent"
+                    },
+                    ticks: {
+                        stepSize: 5,
+                        fontColor: "#999",
+                        fontFamily: "Nunito, sans-serif"
+                    }
+                }]
+            },
+            tooltips: {
+                enabled: true,
+                mode: "index",
+                intersect: false,
+                titleFontColor: "#888",
+                bodyFontColor: "#555",
+                titleFontSize: 12,
+                bodyFontSize: 15,
+                backgroundColor: "rgba(256,256,256,0.95)",
+                displayColors: true,
+                xPadding: 10,
+                yPadding: 7,
+                // borderColor: "rgba(220, 220, 220, 0.9)",
+                borderWidth: 0,
+                caretSize: 6,
+                caretPadding: 10
+            }
+        }
+    };
+
+    var ctx = document.getElementById("responsible_chart").getContext("2d");
+    var myLine = new Chart(ctx, config);
+</script>
+<script>
+    var labels = {!! json_encode($status_chart['label']) !!}
+    var data = {!! json_encode($status_chart['value']) !!}
+    var config = {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Status",
+                    data: data,
+                    backgroundColor: ['#3065D0','#ff9900','#2BC155','#FF6D4D','#FF4847']
+                },
+            ],
+        },
+        options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Chart.js Pie Chart'
+                }
+            }
+    },
+    };
+
+    var ctx = document.getElementById("status_chart").getContext("2d");
+    var myLine = new Chart(ctx, config);
+</script>
+<script>
+    var labels = {!! json_encode($priority_chart['label']) !!}
+    var data = {!! json_encode($priority_chart['value']) !!}
+    var config = {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Priority",
+                    data:  data,
+                    backgroundColor: ["#2BC155","#ff9900",'#FF4847']
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Chart.js Pie Chart'
+                }
+            }
+    },
+    };
+
+    var ctx = document.getElementById("priority_chart").getContext("2d");
+    var myLine = new Chart(ctx, config);
+</script>
+<script>
+    var labels = {!! json_encode($complexity_chart['label']) !!}
+    var data = {!! json_encode($complexity_chart['value']) !!}
+    var config = {
+        type: 'horizontalBar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Complexity",
+                    data:  data,
+                    backgroundColor: ["#2BC155","#ff9900",'#FF4847']
+                },
+            ],
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            legend:false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Chart.js Pie Chart'
+                }
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true, 
+                    }, 
+                }],
+            }
+        },
+    };
+
+    var ctx = document.getElementById("complexity_chart").getContext("2d");
+    var myLine = new Chart(ctx, config);
 </script>
 @stop

@@ -153,23 +153,23 @@
 	var revenueChart = function(){
 		var revenue = document.getElementById("revenue");
 			if (revenue !== null) {
-				var activityData = [{
-						first: [ 60, 40, 70, 40, 60, 80, 50, 45, 70, 45, 70, 40]
-					},
-					{
-						first: [35, 35, 40, 30, 38, 40, 30, 38, 32, 42, 32, 42]
-					},
-					{
-						first: [35, 40, 40, 30, 38, 32, 42, 32, 42, 30, 38, 32]
-					},
-					{
-						first: [35, 40, 30, 38, 32, 42, 30, 35, 22, 30, 45, 30]
-					}
-				];
-				revenue.height = 300;
+				// var activityData = [{
+				// 		first: [ 60, 40, 70, 40, 60, 80, 50, 45, 70, 45, 70, 40]
+				// 	},
+				// 	{
+				// 		first: [35, 35, 40, 30, 38, 40, 30, 38, 32, 42, 32, 42]
+				// 	},
+				// 	{
+				// 		first: [35, 40, 40, 30, 38, 32, 42, 32, 42, 30, 38, 32]
+				// 	},
+				// 	{
+				// 		first: [35, 40, 30, 38, 32, 42, 30, 35, 22, 30, 45, 30]
+				// 	}
+				// ];
+				// revenue.height = 300;
 				
 				var config = {
-					type: "line",
+					type: "bar",
 					data: {
 						labels: [
 							"January",
@@ -193,8 +193,16 @@
 								borderWidth: "8",
 								backgroundColor: 'rgba(254, 99, 78, 0.1)'
 								
+							},
+							{
+								label: "My First dataset",
+								data:  [35, 40, 30, 38, 32, 42, 30, 35, 22, 30, 45, 30],
+								borderColor: 'rgba(254, 99, 78, 1)',
+								borderWidth: "8",
+								backgroundColor: 'rgba(254, 99, 78, 0.1)'
+								
 							}
-						]
+						],
 					},
 					options: {
 						responsive: true,
