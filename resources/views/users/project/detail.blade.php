@@ -258,7 +258,7 @@
                         STATUS
                     </div>
                     <div class="card-body">
-                        <canvas id="status_chart" class="chart-js" height="350px"></canvas>
+                        <canvas id="status_chart" class="chart-js" height="300px"></canvas>
                     </div>
                 </div>
             </div>
@@ -268,7 +268,7 @@
                         PRIORITY
                     </div>
                     <div class="card-body">
-                        <canvas id="priority_chart" class="chart-js pt-4" height="350px"></canvas>
+                        <canvas id="priority_chart" class="chart-js pt-4" height="300px"></canvas>
                         <div class="row text-center mt-2">
                             <div class="col-md-4">
                                 Low <br>
@@ -292,7 +292,7 @@
                         COMPLEXITY
                     </div>
                     <div class="card-body">
-                        <canvas id="complexity_chart" class="chart-js pt-4" height="350px"></canvas>
+                        <canvas id="complexity_chart" class="chart-js pt-4" height="300px"></canvas>
                     </div>
                 </div>
             </div>
