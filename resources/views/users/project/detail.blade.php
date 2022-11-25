@@ -214,7 +214,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" style="height:600px;overflow-x:scroll">
                         <div id="gantt"></div>
                     </div>
                 </div>
@@ -224,7 +224,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-body" style="height:500px;padding-bottom:70px">
+                    <div class="card-body" style="height:600px;padding-bottom:70px">
                         <canvas id="income_expense_chart" class="chart-js pt-4"></canvas>
                     </div>
                 </div>
@@ -234,7 +234,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-body" style="height:500px;padding-bottom:70px">
+                    <div class="card-body" style="height:600px;padding-bottom:70px">
                         <canvas id="hours_chart" class="chart-js pt-4"></canvas>
                     </div>
                 </div>
@@ -244,7 +244,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-body" style="height:500px;padding-bottom:70px">
+                    <div class="card-body" style="height:600px;padding-bottom:70px">
                         <canvas id="responsible_chart" class="chart-js pt-4"></canvas>
                     </div>
                 </div>
