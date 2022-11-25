@@ -39,8 +39,8 @@
                             onclick="editData('{{$project->id}}')"
                         ><i class="fa fa-pencil color-muted"></i> </a>
                         <h2 class="mt-2">{{$project->name}}</h2>
-                        <label for="">Manager : {{$project->employee ? $project->employee->name : ''}}</label><br>
-                        <label for="">Client  : {{$project->client ? $project->client->name." / ".$project->client->email." / ".$project->client->phone : ''}}</label><br>
+                        <label for=""><b> Manager </b> : {{$project->employee ? $project->employee->name : ''}}</label><br>
+                        <label for=""><b> Client </b> : {{$project->client ? $project->client->name." / ".$project->client->email." / ".$project->client->phone : ''}}</label><br>
                     </div>
                 </div>
             </div>
@@ -49,21 +49,21 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <label for="">Start Date : {{date("d M Y",strtotime($project->start_date))}}</label><br>
+                                <label for=""><b> Start Date </b> {{date("d M Y",strtotime($project->start_date))}}</label><br>
                             </div>
                             <div class="col-md-6">
-                                <label for="">End Date   : {{date("d M Y",strtotime($project->end_date))}}</label><br>
+                                <label for=""><b> End Date </b> {{date("d M Y",strtotime($project->end_date))}}</label><br>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label for="">Status   : {{$project->status ? $project->status->name : ''}}</label><br>
+                                <label for=""> <b> Status </b> : {{$project->status ? $project->status->name : ''}}</label><br>
                             </div>
                             <div class="col-md-6">
-                                <label for="">Complexity   : {{$project->complexity ? $project->complexity->name : ''}}</label><br>
+                                <label for=""> <b> Complexity </b> : {{$project->complexity ? $project->complexity->name : ''}}</label><br>
                             </div>
                             <div class="col-md-6">
-                                Priority   : <label for="" class="btn btn-xs btn-{{$project->priority ? $project->priority->color : ''}}">{{$project->priority ? $project->priority->name : ''}}</label><br>
+                                <b> Priority </b> : <label for="" class="btn btn-xs btn-{{$project->priority ? $project->priority->color : ''}}">{{$project->priority ? $project->priority->name : ''}}</label><br>
                             </div>
                         </div>
                     </div>
@@ -703,7 +703,7 @@
     var labels = {!! json_encode($status_chart['label']) !!}
     var data = {!! json_encode($status_chart['value']) !!}
     var config = {
-        type: 'pie',
+        type: 'doughnut',
         data: {
             labels: labels,
             datasets: [
@@ -736,7 +736,7 @@
     var labels = {!! json_encode($priority_chart['label']) !!}
     var data = {!! json_encode($priority_chart['value']) !!}
     var config = {
-        type: 'pie',
+        type: 'doughnut',
         data: {
             labels: labels,
             datasets: [
