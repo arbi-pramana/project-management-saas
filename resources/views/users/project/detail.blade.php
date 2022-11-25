@@ -1,4 +1,6 @@
 @extends('users.layouts.app')
+@section('css')
+@stop
 @section('content')
 <div class="content-body">
     <div class="container-fluid">
@@ -395,7 +397,22 @@
 @section('scripts')
 <script>
     var tasks = {!! json_encode($gantt_chart['tasks']) !!}
-    var gantt = new Gantt("#gantt", tasks);
+    var gantt = new Gantt("#gantt", tasks,{
+        custom_popup_html: function(task) {
+            return `
+                <div style="width:250px !important;padding:20px">
+                    <h5 style="color:white">${task.name}</h5> 
+                    <hr style="border: none;border-bottom: 1px solid gainsboro;">
+                    Start Date : ${task.format_start} <br>
+                    End Date : ${task.format_end} <br>
+                    <br>
+                    Status : ${task.status} <br>
+                    Complexity : ${task.complexity} <br>
+                    Priority : ${task.priority} <br>
+                </div>
+            `;
+        }
+    });
 </script>
 <script>
     function editData(id){
