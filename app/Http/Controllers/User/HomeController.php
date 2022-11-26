@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employee;
 use App\Services\Users\ResourcesCharts\HoursChartService;
 use App\Services\Users\ResourcesCharts\TaskChartService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -29,6 +31,7 @@ class HomeController extends Controller
         $data['hours'] = $this->hours->chart();
         $data['tasks_label'] = $this->tasks->label();
         $data['tasks'] = $this->tasks->chart();
+        $data['employees'] = Employee::where('create_by',Auth::guard('users')->id())->get();
         return view('users.dashboard.resources',$data);
     }
 }

@@ -30,6 +30,35 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="#" method="get">
+                            <div class="form-inline">
+                                <label>Select Employee : </label>
+                                <select name="employee_id" class="form-control ml-4" style="width:300px;">
+                                    @foreach($employees as $employee)
+                                        <option value="{{$employee->id}}">{{$employee->name}}</option>
+                                    @endforeach
+                                </select>
+                                <button class="btn btn-success ml-4">Filter</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        TASK PROGRESS
+                    </div>
+                    <div class="card-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @stop
