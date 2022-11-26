@@ -25,7 +25,7 @@
                         Tasks Overview
                     </div>
                     <div class="card-body">
-
+                        <canvas id="tasks" class="chart-js" style="height:300px;"></canvas>
                     </div>
                 </div>
             </div>
@@ -112,5 +112,41 @@
 
     var ctx = document.getElementById("hours").getContext("2d");
     var myLine = new Chart(ctx, config);
+</script>
+<script>
+    var ctx = document.getElementById("tasks").getContext('2d');
+    var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {!! $tasks_label !!},
+        datasets: {!! json_encode($tasks) !!},
+    },
+    options: {
+        tooltips: {
+        displayColors: true,
+        callbacks:{
+            mode: 'x',
+        },
+        },
+        scales: {
+        xAxes: [{
+            stacked: true,
+            gridLines: {
+            display: false,
+            }
+        }],
+        yAxes: [{
+            stacked: true,
+            ticks: {
+            beginAtZero: true,
+            },
+            type: 'linear',
+        }]
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: { position: 'bottom' },
+    }
+    });
 </script>
 @stop
