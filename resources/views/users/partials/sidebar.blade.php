@@ -8,7 +8,7 @@
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="../acara/index.html">Executive Dashboard</a></li>
-                    <li><a href="../acara/index.html">Resource Dashboard</a></li>
+                    <li><a href="{{route('users.dashboard.resources')}}">Resource Dashboard</a></li>
                 </ul>
             </li>
             <li><a href="{{route('users.project.index')}}" class="ai-icon" aria-expanded="false">

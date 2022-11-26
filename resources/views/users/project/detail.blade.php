@@ -67,6 +67,9 @@
                             <div class="col-md-6">
                                 <b> Priority </b> : <label for="" class="btn btn-xs btn-{{$project->priority ? $project->priority->color : ''}}">{{$project->priority ? $project->priority->name : ''}}</label><br>
                             </div>
+                            <div class="col-md-6">
+                                <label for=""> <b> Plan Hours </b> : {{$project->plan_hours}}</label><br>
+                            </div>
                         </div>
                     </div>
                 </div>
