@@ -42,6 +42,7 @@ Route::get('verify',RegisterController::class.'@verify')->name('users.register.v
 Route::group(['middleware'=>'users.auth','prefix'=>'users'],function(){
     Route::get('logout',LoginController::class.'@logout')->name('users.logout');
     Route::get('dashboard',HomeController::class.'@index')->name('users.dashboard.index');
+    Route::get('resources-dashboard',HomeController::class.'@resources')->name('users.dashboard.resources');
     
     Route::group(['prefix'=>'client'],function(){
         Route::get('/',ClientController::class.'@index')->name('users.client.index');
