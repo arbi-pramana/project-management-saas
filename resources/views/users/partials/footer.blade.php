@@ -1,5 +1,5 @@
 <div class="footer">
     <div class="copyright">
-        <p>Copyright © Designed &amp; Developed by <a href="http://dexignzone.com/" target="_blank">DexignZone</a> 2021</p>
+        <p>© {{date("Y")}} Pimku - Project Management Apps. Designed &amp; Developed by <a href="https://pakar-web.com" target="_blank">pakar-web.com</a> </p>
     </div>
 </div>

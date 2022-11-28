@@ -22,7 +22,7 @@
                             <div class="col-xl-12">
                                 <div class="auth-form">
 									<div class="text-center mb-3">
-										<a href="#"><img src="{{asset('acara/images/logo-full.png')}}" alt=""></a>
+										<a href="#"><img src="{{asset('acara/images/logo-full-white.png')}}" height="100px"></a>
 									</div>
                                     <h4 class="text-center mb-4 text-white">Sign in your account</h4>
                                     @if (\Session::has('success'))
