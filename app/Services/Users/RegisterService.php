@@ -29,7 +29,7 @@ class RegisterService{
             $user->is_active = 1;
             $user->register_token = 1;
             $user->email_verified_at = now();
-            $user->plan_expire_date = now()->addMonth(1);
+            $user->plan_expire_date = now()->addDay(7);
             $user->save();
             return redirect()->route('users.login')->with('success','Activation account successfully, please login');
         }else{

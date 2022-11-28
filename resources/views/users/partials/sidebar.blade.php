@@ -21,7 +21,7 @@
                     <span class="nav-text">Clients</span>
                 </a>
             </li>
-            <li><a href="widget-basic.html" class="ai-icon" aria-expanded="false">
+            <li><a href="{{route('users.plan.index')}}" class="ai-icon" aria-expanded="false">
                     <i class="flaticon-381-bookmark"></i>
                     <span class="nav-text">Plan</span>
                 </a>

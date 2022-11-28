@@ -5,8 +5,10 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Income;
 use App\Models\Project;
+use App\Models\User;
 use App\Services\Users\IncomeService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class IncomeController extends Controller
 {
@@ -25,6 +27,9 @@ class IncomeController extends Controller
 
     public function store(Request $request)
     {
+        if($this->maximum()){
+            return redirect()->back()->with('danger','Your Income is Maximum, Please Updgrade Your Plan');
+        };
         $this->income->store($request);
         return redirect()->back()->with('success','Data has been Added');
     }
@@ -39,5 +44,14 @@ class IncomeController extends Controller
     {
         Income::find($request->id)->delete();
         return redirect()->back()->with('danger','Data has been Deleted');
+    }
+
+    public function maximum()
+    {
+        $user = User::find(Auth::guard('users')->id());
+        $income = Income::where('create_by',Auth::guard('users')->id())->count();
+        if($income >= $user->user_plan->max_incomes){
+            return true;
+        }
     }
 }

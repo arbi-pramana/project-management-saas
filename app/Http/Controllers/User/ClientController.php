@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\Project;
+use App\Models\User;
 use App\Services\Users\ClientService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,9 @@ class ClientController extends Controller
 
     public function store(Request $request)
     {
+        if($this->maximum()){
+            return redirect()->back()->with('danger','Your Client is Maximum, Please Updgrade Your Plan');
+        };
         $this->client->store($request);
         return redirect()->back()->with('success','Data has been Added');
     }
@@ -43,5 +47,14 @@ class ClientController extends Controller
         }
         Client::find($request->id)->delete();
         return redirect()->back()->with('danger','Data has been Deleted');
+    }
+
+    public function maximum()
+    {
+        $user = User::find(Auth::guard('users')->id());
+        $client = Client::where('create_by',Auth::guard('users')->id())->count();
+        if($client >= $user->user_plan->max_clients){
+            return true;
+        }
     }
 }

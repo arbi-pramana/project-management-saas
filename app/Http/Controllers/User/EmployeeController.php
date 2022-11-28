@@ -8,6 +8,7 @@ use App\Models\Employee;
 use App\Models\EmployeeType;
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\User;
 use App\Services\Users\EmployeeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,9 @@ class EmployeeController extends Controller
 
     public function store(Request $request)
     {
+        if($this->maximum()){
+            return redirect()->back()->with('danger','Your Employee is Maximum, Please Updgrade Your Plan');
+        };
         $this->employee->store($request);
         return redirect()->back()->with('success','Data has been Added');
     }
@@ -52,5 +56,14 @@ class EmployeeController extends Controller
         }
         Employee::find($request->id)->delete();
         return redirect()->back()->with('danger','Data has been Deleted');
+    }
+
+    public function maximum()
+    {
+        $user = User::find(Auth::guard('users')->id());
+        $employee = Employee::where('create_by',Auth::guard('users')->id())->count();
+        if($employee >= $user->user_plan->max_employees){
+            return true;
+        }
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\User;
 use App\Services\Users\ProjectCharts\ComplexityChartService;
 use App\Services\Users\ProjectCharts\GanttChartService;
 use App\Services\Users\ProjectCharts\HourChartService;
@@ -13,6 +14,7 @@ use App\Services\Users\ProjectCharts\ResponsibleChartService;
 use App\Services\Users\ProjectCharts\StatusChartService;
 use App\Services\Users\ProjectService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -65,6 +67,9 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
+        if($this->maximum()){
+            return redirect()->back()->with('danger','Your Project is Maximum, Please Updgrade Your Plan');
+        };
         $this->project->store($request);
         return redirect()->back()->with('success','Data has been Added');
     }
@@ -79,5 +84,14 @@ class ProjectController extends Controller
     {
         Project::find($request->id)->delete();
         return redirect('users/project')->with('danger','Data has been Deleted');
+    }
+
+    public function maximum()
+    {
+        $user = User::find(Auth::guard('users')->id());
+        $project = Project::where('create_by',Auth::guard('users')->id())->count();
+        if($project >= $user->user_plan->max_projects){
+            return true;
+        }
     }
 }
