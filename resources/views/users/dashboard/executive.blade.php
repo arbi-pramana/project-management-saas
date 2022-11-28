@@ -400,8 +400,8 @@
     })
 </script>
 <script>
-    var labels = {!! json_encode($resource_chart['label']) !!}
-    var data = {!! json_encode($resource_chart['value']) !!}
+    var labels = {!! json_encode($resource_chart['label'] ?? []) !!}
+    var data = {!! json_encode($resource_chart['value'] ?? []) !!}
     var config = {
         type: 'horizontalBar',
         data: {
@@ -432,10 +432,10 @@
     var myLine = new Chart(ctx, config);
 </script>
 <script>
-    var labels = {!! json_encode($budget_chart['label']) !!}
-    var budget = {!! json_encode($budget_chart['budget']) !!}
-    var incomes = {!! json_encode($budget_chart['income']) !!}
-    var budget_remaining = {!! json_encode($budget_chart['budget_remaining']) !!}
+    var labels = {!! json_encode($budget_chart['label'] ?? []) !!}
+    var budget = {!! json_encode($budget_chart['budget'] ?? []) !!}
+    var incomes = {!! json_encode($budget_chart['income'] ?? []) !!}
+    var budget_remaining = {!! json_encode($budget_chart['budget_remaining'] ?? []) !!}
     var ctx = document.getElementById("budget_chart");
     var chart = new Chart(ctx, {
         type: "bar",
@@ -468,8 +468,8 @@
     });
 </script>
 <script>
-    var labels = {!! json_encode($expense_chart['label']) !!}
-    var expense = {!! json_encode($expense_chart['expense']) !!}
+    var labels = {!! json_encode($expense_chart['label'] ?? []) !!}
+    var expense = {!! json_encode($expense_chart['expense'] ?? []) !!}
     var ctx = document.getElementById("expense_chart");
     var chart = new Chart(ctx, {
         type: "bar",
@@ -497,9 +497,9 @@
     });
 </script>
 <script>
-    var labels = {!! json_encode($hours_chart['label']) !!}
-    var plan_hours = {!! json_encode($hours_chart['plan_hours']) !!}
-    var actual_hours = {!! json_encode($hours_chart['actual_hours']) !!}
+    var labels = {!! json_encode($hours_chart['label'] ?? []) !!}
+    var plan_hours = {!! json_encode($hours_chart['plan_hours'] ?? []) !!}
+    var actual_hours = {!! json_encode($hours_chart['actual_hours'] ?? []) !!}
     var ctx = document.getElementById("hours_chart");
     var chart = new Chart(ctx, {
         type: "bar",

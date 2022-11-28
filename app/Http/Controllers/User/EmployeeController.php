@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\EmployeeType;
+use App\Models\Project;
+use App\Models\Task;
 use App\Services\Users\EmployeeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,6 +42,14 @@ class EmployeeController extends Controller
 
     public function destroy(Request $request)
     {
+        $task = Task::where('employee_id',$request->id)->count();
+        if($task > 0){
+            return redirect()->back()->with('danger','Please Delete Relate Task First');
+        }
+        $project = Project::where('manager',$request->id)->count();
+        if($project > 0){
+            return redirect()->back()->with('danger','Please Delete Relate Project First');
+        }
         Employee::find($request->id)->delete();
         return redirect()->back()->with('danger','Data has been Deleted');
     }

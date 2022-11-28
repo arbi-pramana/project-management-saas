@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Models\Project;
 use App\Services\Users\ClientService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,10 @@ class ClientController extends Controller
 
     public function destroy(Request $request)
     {
+        $client = Project::where('client_id',$request->id)->count();
+        if($client > 0){
+            return redirect()->back()->with('danger','Please Delete Relate Project First');
+        }
         Client::find($request->id)->delete();
         return redirect()->back()->with('danger','Data has been Deleted');
     }

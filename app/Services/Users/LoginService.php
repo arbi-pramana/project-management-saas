@@ -17,7 +17,7 @@ class LoginService{
             && $user->plan_expire_date > now()
         ) {
             Auth::guard('users')->login($user);
-            return redirect()->route('users.dashboard.index');
+            return redirect()->route('users.dashboard.executive');
         } else if($user->is_active == 0) {
             return redirect('/login')->with("danger", "Please verify your email");
         } else if($user->plan_expire_date <= now()) {

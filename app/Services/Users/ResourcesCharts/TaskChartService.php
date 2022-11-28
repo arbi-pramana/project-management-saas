@@ -139,11 +139,11 @@ class TaskChartService{
                 return $q->name;
             })->toArray());
             $data['value'] = [
-                Task::where('status_id',1)->get()->count(),
-                Task::where('status_id',2)->get()->count(),
-                Task::where('status_id',3)->get()->count(),
-                Task::where('status_id',4)->get()->count(),
-                Task::where('status_id',5)->get()->count(),
+                Task::where('create_by',Auth::guard('users')->id())->where('status_id',1)->get()->count(),
+                Task::where('create_by',Auth::guard('users')->id())->where('status_id',2)->get()->count(),
+                Task::where('create_by',Auth::guard('users')->id())->where('status_id',3)->get()->count(),
+                Task::where('create_by',Auth::guard('users')->id())->where('status_id',4)->get()->count(),
+                Task::where('create_by',Auth::guard('users')->id())->where('status_id',5)->get()->count(),
             ];
             return $data;
         } else {
@@ -151,11 +151,11 @@ class TaskChartService{
                 return $q->name;
             })->toArray());
             $data['value'] = [
-                Task::where('employee_id',$request->employee_id)->where('status_id',1)->get()->count(),
-                Task::where('employee_id',$request->employee_id)->where('status_id',2)->get()->count(),
-                Task::where('employee_id',$request->employee_id)->where('status_id',3)->get()->count(),
-                Task::where('employee_id',$request->employee_id)->where('status_id',4)->get()->count(),
-                Task::where('employee_id',$request->employee_id)->where('status_id',5)->get()->count(),
+                Task::where('create_by',Auth::guard('users')->id())->where('employee_id',$request->employee_id)->where('status_id',1)->get()->count(),
+                Task::where('create_by',Auth::guard('users')->id())->where('employee_id',$request->employee_id)->where('status_id',2)->get()->count(),
+                Task::where('create_by',Auth::guard('users')->id())->where('employee_id',$request->employee_id)->where('status_id',3)->get()->count(),
+                Task::where('create_by',Auth::guard('users')->id())->where('employee_id',$request->employee_id)->where('status_id',4)->get()->count(),
+                Task::where('create_by',Auth::guard('users')->id())->where('employee_id',$request->employee_id)->where('status_id',5)->get()->count(),
             ];
             return $data;
         }
