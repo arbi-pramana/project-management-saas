@@ -7,6 +7,8 @@ use App\Models\Client;
 use App\Models\Employee;
 use App\Models\Project;
 use App\Models\Task;
+use App\Services\Users\ExecutiveCharts\GanttChartService;
+use App\Services\Users\ExecutiveCharts\TaskChartService as ExecutiveChartsTaskChartService;
 use App\Services\Users\ProjectCharts\ComplexityChartService;
 use App\Services\Users\ProjectCharts\PriorityChartService;
 use App\Services\Users\ResourcesCharts\HoursChartService;
@@ -23,11 +25,15 @@ class HomeController extends Controller
         TaskChartService $tasks,
         PriorityChartService $priority_chart,
         ComplexityChartService $complexity_chart,
+        ExecutiveChartsTaskChartService $tasks_executive,
+        GanttChartService $gantt_chart
     ){
         $this->hours = $hours;
         $this->tasks = $tasks;
+        $this->tasks_executive = $tasks_executive;
         $this->priority_chart = $priority_chart;
         $this->complexity_chart = $complexity_chart;
+        $this->gantt_chart = $gantt_chart;
     }
 
     public function index()
@@ -67,10 +73,11 @@ class HomeController extends Controller
         $data['count_task'] = Task::where('create_by',Auth::guard('users')->id())->where("start_date",'like',"%".$request->year."%")->count();
         $data['count_task_completed'] = Task::where('create_by',Auth::guard('users')->id())->where("start_date",'like',"%".$request->year."%")->where('status_id',3)->count();
         $data['count_plan_hours'] = Project::where('create_by',Auth::guard('users')->id())->where("start_date",'like',"%".$request->year."%")->sum('plan_hours');
-        $data['tasks'] = $this->tasks->tasks($request);
-        $data['task_completed'] = $this->tasks->task_completed($request);
+        $data['tasks'] = $this->tasks_executive->tasks($request);
+        $data['task_completed'] = $this->tasks_executive->task_completed($request);
         $data['priority_chart'] = $this->priority_chart->executive_chart($request);
         $data['complexity_chart'] = $this->complexity_chart->executive_chart($request);
+        $data['gantt_chart'] = $this->gantt_chart->chart($request);
         return view('users.dashboard.executive',$data);
     }
 }

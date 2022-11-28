@@ -44,22 +44,6 @@ class TaskChartService{
         }
     }
 
-    public function task_completed($request)
-    {
-        if($request->employee_id == null){
-            return Task::where('create_by',Auth::guard('users')->id())
-                ->where('status_id',3)
-                ->get()
-                ->count();
-        } else {
-            return Task::where('create_by',Auth::guard('users')->id())
-                ->where('status_id',3)
-                ->where('employee_id',$request->employee_id)
-                ->get()
-                ->count();
-        }
-    }
-
     public function due_this_month($request)
     {
         if($request->employee_id == null){
@@ -132,6 +116,22 @@ class TaskChartService{
         }
     }
 
+    public function task_completed($request)
+    {
+        if($request->employee_id == null){
+            return Task::where('create_by',Auth::guard('users')->id())
+                ->where('status_id',3)
+                ->get()
+                ->count();
+        } else {
+            return Task::where('create_by',Auth::guard('users')->id())
+                ->where('status_id',3)
+                ->where('employee_id',$request->employee_id)
+                ->get()
+                ->count();
+        }
+    }
+
     public function task_progress($request)
     {
         if($request->employee_id == null){
@@ -156,35 +156,6 @@ class TaskChartService{
                 Task::where('employee_id',$request->employee_id)->where('status_id',3)->get()->count(),
                 Task::where('employee_id',$request->employee_id)->where('status_id',4)->get()->count(),
                 Task::where('employee_id',$request->employee_id)->where('status_id',5)->get()->count(),
-            ];
-            return $data;
-        }
-    }
-
-    public function tasks($request)
-    {
-        if($request->year == null){
-            $data['label'] = array_keys(Status::get()->groupBy(function($q){
-                return $q->name;
-            })->toArray());
-            $data['value'] = [
-                Task::where('status_id',1)->get()->count(),
-                Task::where('status_id',2)->get()->count(),
-                Task::where('status_id',3)->get()->count(),
-                Task::where('status_id',4)->get()->count(),
-                Task::where('status_id',5)->get()->count(),
-            ];
-            return $data;
-        } else {
-            $data['label'] = array_keys(Status::get()->groupBy(function($q){
-                return $q->name;
-            })->toArray());
-            $data['value'] = [
-                Task::where('start_date','like','%'.$request->year.'%')->where('status_id',1)->get()->count(),
-                Task::where('start_date','like','%'.$request->year.'%')->where('status_id',2)->get()->count(),
-                Task::where('start_date','like','%'.$request->year.'%')->where('status_id',3)->get()->count(),
-                Task::where('start_date','like','%'.$request->year.'%')->where('status_id',4)->get()->count(),
-                Task::where('start_date','like','%'.$request->year.'%')->where('status_id',5)->get()->count(),
             ];
             return $data;
         }

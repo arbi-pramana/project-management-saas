@@ -213,7 +213,20 @@
                 </div>
             </div>
         </div>
-        <h3 class="mt-4">PROJECT TIMELINE</h3>
+        <div>
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <h3 class="mt-4">PROJECT TIMELINE </h3>
+                </div>
+                <div class="col-md-6">
+                    <select name="timeline_view_mode" id="timeline_view_mode" class="form-control" style="width:100px;float:right">
+                        <option value="Day">Day</option>
+                        <option value="Month">Month</option>
+                        <option value="Year">Year</option>
+                    </select>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -416,6 +429,17 @@
             `;
         }
     });
+    $("#timeline_view_mode").change(function(){
+        if($("#timeline_view_mode").val() == "Day"){
+            gantt.change_view_mode("Day");
+        }
+        if($("#timeline_view_mode").val() == "Month"){
+            gantt.change_view_mode("Month");
+        }
+        if($("#timeline_view_mode").val() == "Year"){
+            gantt.change_view_mode("Year");
+        }
+    })
 </script>
 <script>
     function editData(id){

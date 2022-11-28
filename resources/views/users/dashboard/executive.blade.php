@@ -133,12 +133,46 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        PROJECT TIMELINE
+                        <select name="timeline_view_mode" id="timeline_view_mode" class="form-control" style="width:100px;float:right">
+                            <option value="Day">Day</option>
+                            <option value="Month">Month</option>
+                            <option value="Year">Year</option>
+                        </select>
+                    </div>
+                    <div class="card-body" style="height:600px;overflow-x:scroll">
+                        <div id="gantt"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+
+                    </div>
+                    <div class="card-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @stop
 @section('scripts')
+@php
+    if($count_task == 0 ){
+        $count_task = 1;
+    }
+    $series = number_format(($count_task_completed/$count_task)*100,0)
+@endphp
 <script>
-    var optionsCircle = {
+    var series = {{$series}}
+    var taskApexChart = {
         chart: {
             type: 'radialBar',
             height: 350,
@@ -188,7 +222,7 @@
         lineCap: 'round'
     },
     colors:['#FE634E'],
-    series: [{{number_format(($count_task_completed/$count_task)*100,0)}}],
+    series: [series],
     labels: ['Task Completed'],
         
         legend: {
@@ -199,7 +233,7 @@
         },		 
     }
 
-    var task_apex_chart1 = new ApexCharts(document.querySelector('#task_apex_chart'), optionsCircle);
+    var task_apex_chart1 = new ApexCharts(document.querySelector('#task_apex_chart'), taskApexChart);
     task_apex_chart1.render();
 </script>
 <script>
@@ -304,5 +338,35 @@
 
     var ctx = document.getElementById("complexity_chart").getContext("2d");
     var myLine = new Chart(ctx, config);
+</script>
+<script>
+    var projects = {!! json_encode($gantt_chart['projects']) !!}
+    var gantt = new Gantt("#gantt", projects,{
+        custom_popup_html: function(project) {
+            return `
+                <div style="width:250px !important;padding:20px">
+                    <h5 style="color:white">${project.name}</h5> 
+                    <hr style="border: none;border-bottom: 1px solid gainsboro;">
+                    Start Date : ${project.format_start} <br>
+                    End Date : ${project.format_end} <br>
+                    <br>
+                    Status : ${project.status} <br>
+                    Complexity : ${project.complexity} <br>
+                    Priority : ${project.priority} <br>
+                </div>
+            `;
+        }
+    });
+    $("#timeline_view_mode").change(function(){
+        if($("#timeline_view_mode").val() == "Day"){
+            gantt.change_view_mode("Day");
+        }
+        if($("#timeline_view_mode").val() == "Month"){
+            gantt.change_view_mode("Month");
+        }
+        if($("#timeline_view_mode").val() == "Year"){
+            gantt.change_view_mode("Year");
+        }
+    })
 </script>
 @stop
