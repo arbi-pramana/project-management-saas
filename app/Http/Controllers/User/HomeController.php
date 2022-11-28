@@ -7,7 +7,10 @@ use App\Models\Client;
 use App\Models\Employee;
 use App\Models\Project;
 use App\Models\Task;
+use App\Services\Users\ExecutiveCharts\BudgetChartService;
 use App\Services\Users\ExecutiveCharts\GanttChartService;
+use App\Services\Users\ExecutiveCharts\HourChartService;
+use App\Services\Users\ExecutiveCharts\ResourceChartService;
 use App\Services\Users\ExecutiveCharts\TaskChartService as ExecutiveChartsTaskChartService;
 use App\Services\Users\ProjectCharts\ComplexityChartService;
 use App\Services\Users\ProjectCharts\PriorityChartService;
@@ -26,7 +29,10 @@ class HomeController extends Controller
         PriorityChartService $priority_chart,
         ComplexityChartService $complexity_chart,
         ExecutiveChartsTaskChartService $tasks_executive,
-        GanttChartService $gantt_chart
+        GanttChartService $gantt_chart,
+        ResourceChartService $resource_chart,
+        BudgetChartService $budget_chart,
+        HourChartService $hours_chart
     ){
         $this->hours = $hours;
         $this->tasks = $tasks;
@@ -34,6 +40,9 @@ class HomeController extends Controller
         $this->priority_chart = $priority_chart;
         $this->complexity_chart = $complexity_chart;
         $this->gantt_chart = $gantt_chart;
+        $this->resource_chart = $resource_chart;
+        $this->budget_chart = $budget_chart;
+        $this->hours_chart = $hours_chart;
     }
 
     public function index()
@@ -78,6 +87,10 @@ class HomeController extends Controller
         $data['priority_chart'] = $this->priority_chart->executive_chart($request);
         $data['complexity_chart'] = $this->complexity_chart->executive_chart($request);
         $data['gantt_chart'] = $this->gantt_chart->chart($request);
+        $data['resource_chart'] = $this->resource_chart->chart($request);
+        $data['budget_chart'] = $this->budget_chart->budget($request);
+        $data['expense_chart'] = $this->budget_chart->expense($request);
+        $data['hours_chart'] = $this->hours_chart->chart($request);
         return view('users.dashboard.executive',$data);
     }
 }

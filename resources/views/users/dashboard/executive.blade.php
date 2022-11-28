@@ -152,10 +152,46 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
-
+                        RESOURCE WORKLOAD
                     </div>
                     <div class="card-body">
-
+                        <canvas id="resource_chart" class="chart-js pt-4" height="300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        PROJECT BUDGET
+                    </div>
+                    <div class="card-body">
+                        <canvas id="budget_chart" style="height:600px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        PROJECT EXPENSE
+                    </div>
+                    <div class="card-body">
+                        <canvas id="expense_chart" style="height:600px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        PLANNED VS HOURS SPENT
+                    </div>
+                    <div class="card-body">
+                        <canvas id="hours_chart" style="height:600px"></canvas>
                     </div>
                 </div>
             </div>
@@ -320,12 +356,6 @@
             indexAxis: 'y',
             responsive: true,
             legend:false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Chart.js Pie Chart'
-                }
-            },
             scales: {
                 xAxes: [{
                     ticks: {
@@ -368,5 +398,128 @@
             gantt.change_view_mode("Year");
         }
     })
+</script>
+<script>
+    var labels = {!! json_encode($resource_chart['label']) !!}
+    var data = {!! json_encode($resource_chart['value']) !!}
+    var config = {
+        type: 'horizontalBar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Workload",
+                    data:  data,
+                    backgroundColor: "#2BC155"
+                },
+            ],
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            legend:false,
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true, 
+                    }, 
+                }],
+            }
+        },
+    };
+
+    var ctx = document.getElementById("resource_chart").getContext("2d");
+    var myLine = new Chart(ctx, config);
+</script>
+<script>
+    var labels = {!! json_encode($budget_chart['label']) !!}
+    var budget = {!! json_encode($budget_chart['budget']) !!}
+    var incomes = {!! json_encode($budget_chart['income']) !!}
+    var budget_remaining = {!! json_encode($budget_chart['budget_remaining']) !!}
+    var ctx = document.getElementById("budget_chart");
+    var chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    type: "line",
+                    backgroundColor: "#FF6D4D",
+                    borderColor: "#FE634E",
+                    label: "Budget Remaining",
+                    data: budget_remaining,
+                    lineTension: 0, 
+                    fill: false 
+                },
+                {
+                    type: "bar",
+                    backgroundColor: "#5e72e4",
+                    label: "Budget",
+                    data: budget
+                },
+                {
+                    type: "bar",
+                    backgroundColor: "#2BC155",
+                    label: "Incomes",
+                    data: incomes
+                },
+            ]
+        }
+    });
+</script>
+<script>
+    var labels = {!! json_encode($expense_chart['label']) !!}
+    var expense = {!! json_encode($expense_chart['expense']) !!}
+    var ctx = document.getElementById("expense_chart");
+    var chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    type: "bar",
+                    backgroundColor: "#FE634E",
+                    label: "Expense",
+                    data: expense
+                },
+            ]
+        },
+        options:{
+            legend:false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true, 
+                    }, 
+                }],
+            }
+        }
+    });
+</script>
+<script>
+    var labels = {!! json_encode($hours_chart['label']) !!}
+    var plan_hours = {!! json_encode($hours_chart['plan_hours']) !!}
+    var actual_hours = {!! json_encode($hours_chart['actual_hours']) !!}
+    var ctx = document.getElementById("hours_chart");
+    var chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    type: "bar",
+                    backgroundColor: "#5e72e4",
+                    label: "Plan Hours",
+                    data: plan_hours
+                },
+                {
+                    type: "bar",
+                    backgroundColor: "#2BC155",
+                    label: "Actual Hours",
+                    data: actual_hours
+                },
+            ]
+        }
+    });
 </script>
 @stop

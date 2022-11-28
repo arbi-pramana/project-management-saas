@@ -199,23 +199,30 @@
     var barColors = "#2BC155";
 
     new Chart("tasks", {
-    type: "bar",
-    data: {
-        labels: xValues,
-        datasets: [{
-        backgroundColor: barColors,
-        data: yValues
-        }]
-    },
-    options: {
-        legend: {
-            display: false
+        type: "bar",
+        data: {
+            labels: xValues,
+            datasets: [{
+            backgroundColor: barColors,
+            data: yValues
+            }]
         },
-        title: {
-        display: true,
-        text: "Task Overview"
+        options: {
+            legend: {
+                display: false
+            },
+            title: {
+                display: false,
+                text: "Task Overview"
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true, 
+                    }, 
+                }],
+            }
         }
-    }
     });
 </script>
 <script>

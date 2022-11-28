@@ -8,8 +8,7 @@ class GanttChartService{
     public function chart($request)
     {
         if(!empty($request->year)){
-            $data['projects'] = Project::where('create_by',Auth::guard('users')->id())->get()
-            ->where('start_date','like','%'.$request->year.'%')
+            $data['projects'] = Project::where('create_by',Auth::guard('users')->id())->where('start_date','like','%'.$request->year.'%')->get()
             ->map(function($q) {
                 $data['id'] = $q->wbs_code;
                 $data['name'] = $q->name;
