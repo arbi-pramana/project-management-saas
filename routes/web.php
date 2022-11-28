@@ -11,6 +11,7 @@ use App\Http\Controllers\User\ProjectController;
 use App\Http\Controllers\User\ExpenseController;
 use App\Http\Controllers\User\IncomeController;
 use App\Http\Controllers\User\MilestoneController;
+use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\TaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,8 @@ Route::get('verify',RegisterController::class.'@verify')->name('users.register.v
 
 Route::group(['middleware'=>'users.auth','prefix'=>'users'],function(){
     Route::get('logout',LoginController::class.'@logout')->name('users.logout');
+    Route::get('profile',ProfileController::class.'@index')->name('users.profile.index');
+    Route::put('profile',ProfileController::class.'@update')->name('users.profile.update');
     Route::get('resources-dashboard',HomeController::class.'@resources')->name('users.dashboard.resources');
     Route::get('executive-dashboard',HomeController::class.'@executive')->name('users.dashboard.executive');
     
