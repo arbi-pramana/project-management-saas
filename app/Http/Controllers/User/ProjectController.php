@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Expense;
+use App\Models\Income;
+use App\Models\Milestone;
 use App\Models\Project;
+use App\Models\Task;
 use App\Models\User;
 use App\Services\Users\ProjectCharts\ComplexityChartService;
 use App\Services\Users\ProjectCharts\GanttChartService;
@@ -83,6 +87,10 @@ class ProjectController extends Controller
     public function destroy(Request $request)
     {
         Project::find($request->id)->delete();
+        Milestone::where('project_id',$request->id)->delete();
+        Task::where('project_id',$request->id)->delete();
+        Income::where('project_id',$request->id)->delete();
+        Expense::where('project_id',$request->id)->delete();
         return redirect('users/project')->with('danger','Data has been Deleted');
     }
 
