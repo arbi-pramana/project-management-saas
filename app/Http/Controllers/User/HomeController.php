@@ -38,6 +38,7 @@ class HomeController extends Controller
         $data['due_next_month'] = $this->tasks->due_next_month($request);
         $data['due_this_year'] = $this->tasks->due_this_year($request);
         $data['due_next_year'] = $this->tasks->due_next_year($request);
+        $data['task_progress'] = $this->tasks->task_progress($request);
         return view('users.dashboard.resources',$data);
     }
 }

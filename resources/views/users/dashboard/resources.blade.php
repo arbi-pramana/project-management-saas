@@ -40,7 +40,7 @@
                                 <select name="employee_id" class="form-control ml-4" style="width:300px;">
                                     <option value="">All</option>
                                     @foreach($employees as $employee)
-                                        <option value="{{$employee->id}}">{{$employee->name}}</option>
+                                        <option value="{{$employee->id}}" @if(request('employee_id') == $employee->id) selected="selected" @endif >{{$employee->name}}</option>
                                     @endforeach
                                 </select>
                                 <button class="btn btn-success ml-4">Filter</button>
@@ -105,7 +105,7 @@
                         TASK PROGRESS
                     </div>
                     <div class="card-body">
-
+                        <canvas id="task_progress" class="chart-js" style="height:300px;"></canvas>
                     </div>
                 </div>
             </div>
@@ -194,28 +194,61 @@
     var myLine = new Chart(ctx, config);
 </script>
 <script>
-var xValues = {!! json_encode($tasks_label) !!};
-var yValues = {!! json_encode($tasks) !!};
-var barColors = "#2BC155";
+    var xValues = {!! json_encode($tasks_label) !!};
+    var yValues = {!! json_encode($tasks) !!};
+    var barColors = "#2BC155";
 
-new Chart("tasks", {
-  type: "bar",
-  data: {
-    labels: xValues,
-      datasets: [{
-      backgroundColor: barColors,
-      data: yValues
-    }]
-  },
-  options: {
-    legend: {
-        display: false
+    new Chart("tasks", {
+    type: "bar",
+    data: {
+        labels: xValues,
+        datasets: [{
+        backgroundColor: barColors,
+        data: yValues
+        }]
     },
-    title: {
-      display: true,
-      text: "Task Overview"
+    options: {
+        legend: {
+            display: false
+        },
+        title: {
+        display: true,
+        text: "Task Overview"
+        }
     }
-  }
-});
+    });
+</script>
+<script>
+    var labels = {!! json_encode($task_progress['label']) !!}
+    var data = {!! json_encode($task_progress['value']) !!}
+    var config = {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Status",
+                    data: data,
+                    backgroundColor: ['#3065D0','#ff9900','#2BC155','#FF6D4D','#FF4847']
+                },
+            ],
+        },
+        options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Chart.js Pie Chart'
+                }
+            }
+    },
+    };
+
+    var ctx = document.getElementById("task_progress").getContext("2d");
+    var myLine = new Chart(ctx, config);
 </script>
 @stop

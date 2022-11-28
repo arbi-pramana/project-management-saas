@@ -2,6 +2,7 @@
 namespace App\Services\Users\ResourcesCharts;
 
 use App\Models\Employee;
+use App\Models\Status;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 
@@ -127,6 +128,35 @@ class TaskChartService{
                 ->where('employee_id',$request->employee_id)
                 ->get()
                 ->count();
+        }
+    }
+
+    public function task_progress($request)
+    {
+        if($request->employee_id == null){
+            $data['label'] = array_keys(Status::get()->groupBy(function($q){
+                return $q->name;
+            })->toArray());
+            $data['value'] = [
+                Task::where('status_id',1)->get()->count(),
+                Task::where('status_id',2)->get()->count(),
+                Task::where('status_id',3)->get()->count(),
+                Task::where('status_id',4)->get()->count(),
+                Task::where('status_id',5)->get()->count(),
+            ];
+            return $data;
+        } else {
+            $data['label'] = array_keys(Status::get()->groupBy(function($q){
+                return $q->name;
+            })->toArray());
+            $data['value'] = [
+                Task::where('employee_id',$request->employee_id)->where('status_id',1)->get()->count(),
+                Task::where('employee_id',$request->employee_id)->where('status_id',2)->get()->count(),
+                Task::where('employee_id',$request->employee_id)->where('status_id',3)->get()->count(),
+                Task::where('employee_id',$request->employee_id)->where('status_id',4)->get()->count(),
+                Task::where('employee_id',$request->employee_id)->where('status_id',5)->get()->count(),
+            ];
+            return $data;
         }
     }
 }
