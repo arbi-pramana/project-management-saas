@@ -24,6 +24,7 @@
                             Max Incomes : <b> @if($plan->max_incomes == 0 )  Unlimited Incomes @else {{$plan->max_incomes}} Incomes @endif </b> <br>
                             Max Expenses : <b> @if($plan->max_expenses == 0 )  Unlimited Expenses @else {{$plan->max_expenses}} Expenses @endif </b> <br>
                             Max Employee : <b> @if($plan->max_expenses == 0 )  Unlimited Employee @else {{$plan->max_expenses}} Employee @endif </b> <br>
+                            @if($plan->is_support == 1) <b> <i class="fa fa-phone"></i> Customer Support </b> <br> @endif
                             <small>{!!$plan->description!!}</small>
                             @if($plan->id == Auth::guard('users')->user()->plan)
                                 <div class="text-center mt-4">
