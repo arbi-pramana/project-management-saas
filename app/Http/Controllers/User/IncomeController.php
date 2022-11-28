@@ -50,7 +50,7 @@ class IncomeController extends Controller
     {
         $user = User::find(Auth::guard('users')->id());
         $income = Income::where('create_by',Auth::guard('users')->id())->count();
-        if($income >= $user->user_plan->max_incomes){
+        if($income >= $user->user_plan->max_incomes && $income != 0){
             return true;
         }
     }

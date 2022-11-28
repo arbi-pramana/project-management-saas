@@ -53,7 +53,7 @@ class ClientController extends Controller
     {
         $user = User::find(Auth::guard('users')->id());
         $client = Client::where('create_by',Auth::guard('users')->id())->count();
-        if($client >= $user->user_plan->max_clients){
+        if($client >= $user->user_plan->max_clients && $client != 0){
             return true;
         }
     }

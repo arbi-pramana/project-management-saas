@@ -98,7 +98,7 @@ class ProjectController extends Controller
     {
         $user = User::find(Auth::guard('users')->id());
         $project = Project::where('create_by',Auth::guard('users')->id())->count();
-        if($project >= $user->user_plan->max_projects){
+        if($project >= $user->user_plan->max_projects && $project != 0){
             return true;
         }
     }

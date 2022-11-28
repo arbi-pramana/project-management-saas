@@ -50,7 +50,7 @@ class ExpenseController extends Controller
     {
         $user = User::find(Auth::guard('users')->id());
         $expense = Expense::where('create_by',Auth::guard('users')->id())->count();
-        if($expense >= $user->user_plan->max_expenses){
+        if($expense >= $user->user_plan->max_expenses && $expense != 0){
             return true;
         }
     }

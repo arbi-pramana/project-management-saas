@@ -62,7 +62,7 @@ class EmployeeController extends Controller
     {
         $user = User::find(Auth::guard('users')->id());
         $employee = Employee::where('create_by',Auth::guard('users')->id())->count();
-        if($employee >= $user->user_plan->max_employees){
+        if($employee >= $user->user_plan->max_employees && $employee != 0){
             return true;
         }
     }
