@@ -7,7 +7,7 @@
                     <span class="nav-text">Dashboard</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="../acara/index.html">Executive Dashboard</a></li>
+                    <li><a href="{{route('users.dashboard.executive')}}">Executive Dashboard</a></li>
                     <li><a href="{{route('users.dashboard.resources')}}">Resource Dashboard</a></li>
                 </ul>
             </li>

@@ -2,6 +2,7 @@
 namespace App\Services\Users\ResourcesCharts;
 
 use App\Models\Employee;
+use App\Models\Priority;
 use App\Models\Status;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,7 @@ class TaskChartService{
         foreach ($datasets as $i => $data) {
             $dataset[] = $data->count();
         }
-        return $dataset;
+        return $dataset ?? [];
     }
 
     public function label()
@@ -158,5 +159,47 @@ class TaskChartService{
             ];
             return $data;
         }
+    }
+
+    public function tasks($request)
+    {
+        if($request->year == null){
+            $data['label'] = array_keys(Status::get()->groupBy(function($q){
+                return $q->name;
+            })->toArray());
+            $data['value'] = [
+                Task::where('status_id',1)->get()->count(),
+                Task::where('status_id',2)->get()->count(),
+                Task::where('status_id',3)->get()->count(),
+                Task::where('status_id',4)->get()->count(),
+                Task::where('status_id',5)->get()->count(),
+            ];
+            return $data;
+        } else {
+            $data['label'] = array_keys(Status::get()->groupBy(function($q){
+                return $q->name;
+            })->toArray());
+            $data['value'] = [
+                Task::where('start_date','like','%'.$request->year.'%')->where('status_id',1)->get()->count(),
+                Task::where('start_date','like','%'.$request->year.'%')->where('status_id',2)->get()->count(),
+                Task::where('start_date','like','%'.$request->year.'%')->where('status_id',3)->get()->count(),
+                Task::where('start_date','like','%'.$request->year.'%')->where('status_id',4)->get()->count(),
+                Task::where('start_date','like','%'.$request->year.'%')->where('status_id',5)->get()->count(),
+            ];
+            return $data;
+        }
+    }
+
+    public function priority($id)
+    {
+        $data['label'] = array_keys(Priority::get()->groupBy(function($q){
+            return $q->name;
+        })->toArray());
+        $data['value'] = [
+            Task::where('create_by',Auth::guard('users')->id())->where('priority_id',1)->get()->count(),
+            Task::where('create_by',Auth::guard('users')->id())->where('priority_id',2)->get()->count(),
+            Task::where('create_by',Auth::guard('users')->id())->where('priority_id',3)->get()->count(),
+        ];
+        return $data;
     }
 }

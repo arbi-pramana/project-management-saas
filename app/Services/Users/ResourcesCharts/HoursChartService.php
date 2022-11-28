@@ -20,12 +20,12 @@ class HoursChartService{
         foreach ($hours as $i => $hour) {
             $plan_hours[] = $hour->sum('plan_hours');
         }
-        $data['plan_hours'] = $plan_hours;
+        $data['plan_hours'] = $plan_hours ?? [];
 
         foreach ($hours as $i => $hour) {
             $actual_hours[] = $hour->sum('actual_hours');
         }
-        $data['actual_hours'] = $actual_hours;
+        $data['actual_hours'] = $actual_hours ?? [];
 
         return $data;
     }
