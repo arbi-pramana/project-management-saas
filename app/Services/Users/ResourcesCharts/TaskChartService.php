@@ -2,39 +2,23 @@
 namespace App\Services\Users\ResourcesCharts;
 
 use App\Models\Employee;
-use App\Models\Status;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
-use stdClass;
 
 class TaskChartService{
     
     public function chart()
     {
-        $statuses = Status::get();
-        foreach ($statuses as $i => $status) {
-            $datasets[$status->name] = Task::where('status_id',$status->id)->get()
-            ->groupBy('employee_id')
+        $datasets = Task::where('create_by',Auth::guard('users')->id())
+            ->get()
             ->map(function($q){
-                $status = $q->count();
-                return $status;
-            });
-        }
-
-        $colors = [
-            "Open" => "#3065D0",
-            "In Progress" => "#ff9900",
-            "Completed" => "#2BC155",
-            "On Hold" => "#FF6D4D",
-            "Cancelled" => "#FF4847",
-        ];
-
+                $q['emp_name'] = $q->employee->name;
+                return $q;
+            })
+            ->groupBy('emp_name');
+        
         foreach ($datasets as $i => $data) {
-            $dataset[] = [
-                "label" => $i,
-                "backgroundColor" => $colors[$i],
-                "data" => array_values($data->toArray())
-            ];
+            $dataset[] = $data->count();
         }
         return $dataset;
     }
@@ -42,5 +26,107 @@ class TaskChartService{
     public function label()
     {
         return Employee::where('create_by',Auth::guard('users')->id())->pluck('name');
+    }
+
+    public function task_assigned($request)
+    {
+        if($request->employee_id == null){
+            return Task::where('create_by',Auth::guard('users')->id())
+                ->get()
+                ->count();
+        } else {
+            return Task::where('create_by',Auth::guard('users')->id())
+                ->where('employee_id',$request->employee_id)
+                ->get()
+                ->count();
+        }
+    }
+
+    public function task_completed($request)
+    {
+        if($request->employee_id == null){
+            return Task::where('create_by',Auth::guard('users')->id())
+                ->where('status_id',3)
+                ->get()
+                ->count();
+        } else {
+            return Task::where('create_by',Auth::guard('users')->id())
+                ->where('status_id',3)
+                ->where('employee_id',$request->employee_id)
+                ->get()
+                ->count();
+        }
+    }
+
+    public function due_this_month($request)
+    {
+        if($request->employee_id == null){
+            return Task::where('create_by',Auth::guard('users')->id())
+                ->where('status_id',"!=",3)
+                ->whereMonth('start_date',date("m"))
+                ->get()
+                ->count();
+        } else {
+            return Task::where('create_by',Auth::guard('users')->id())
+                ->where('status_id',"!=",3)
+                ->whereMonth('start_date',date("m"))
+                ->where('employee_id',$request->employee_id)
+                ->get()
+                ->count();
+        }
+    }
+
+    public function due_next_month($request)
+    {
+        if($request->employee_id == null){
+            return Task::where('create_by',Auth::guard('users')->id())
+                ->where('status_id',"!=",3)
+                ->whereMonth('start_date',date("m"."+1 month"))
+                ->get()
+                ->count();
+        } else {
+            return Task::where('create_by',Auth::guard('users')->id())
+                ->where('status_id',"!=",3)
+                ->whereMonth('start_date',date("m"."+1 month"))
+                ->where('employee_id',$request->employee_id)
+                ->get()
+                ->count();
+        }
+    }
+
+    public function due_this_year($request)
+    {
+        if($request->employee_id == null){
+            return Task::where('create_by',Auth::guard('users')->id())
+                ->where('status_id','!=',3)
+                ->whereYear('start_date',date("Y"))
+                ->get()
+                ->count();
+        } else {
+            return Task::where('create_by',Auth::guard('users')->id())
+                ->where('status_id','!=',3)
+                ->whereYear('start_date',date("Y"))
+                ->where('employee_id',$request->employee_id)
+                ->get()
+                ->count();
+        }
+    }
+
+    public function due_next_year($request)
+    {
+        if($request->employee_id == null){
+            return Task::where('create_by',Auth::guard('users')->id())
+                ->where('status_id','!=',3)
+                ->whereYear('start_date',now()->addYear())
+                ->get()
+                ->count();
+        } else {
+            return Task::where('create_by',Auth::guard('users')->id())
+                ->where('status_id','!=',3)
+                ->whereYear('start_date',now()->addYear())
+                ->where('employee_id',$request->employee_id)
+                ->get()
+                ->count();
+        }
     }
 }

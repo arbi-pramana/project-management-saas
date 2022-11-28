@@ -32,6 +32,14 @@ class HomeController extends Controller
         $data['tasks_label'] = $this->tasks->label();
         $data['tasks'] = $this->tasks->chart();
         $data['employees'] = Employee::where('create_by',Auth::guard('users')->id())->get();
+        $data['task_assigned'] = $this->tasks->task_assigned($request);
+        $data['task_completed'] = $this->tasks->task_completed($request);
+        $data['due_this_month'] = $this->tasks->due_this_month($request);
+        $data['due_next_month'] = $this->tasks->due_next_month($request);
+        $data['due_this_year'] = $this->tasks->due_this_year($request);
+        $data['due_next_year'] = $this->tasks->due_next_year($request);
         return view('users.dashboard.resources',$data);
     }
 }
+
+

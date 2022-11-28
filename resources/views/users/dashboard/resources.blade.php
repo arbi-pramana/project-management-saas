@@ -38,6 +38,7 @@
                             <div class="form-inline">
                                 <label>Select Employee : </label>
                                 <select name="employee_id" class="form-control ml-4" style="width:300px;">
+                                    <option value="">All</option>
                                     @foreach($employees as $employee)
                                         <option value="{{$employee->id}}">{{$employee->name}}</option>
                                     @endforeach
@@ -45,6 +46,56 @@
                                 <button class="btn btn-success ml-4">Filter</button>
                             </div>
                         </form>
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body text-center p-4">
+                                        <h5>TASK ASSIGNED</h5>
+                                        <h4>{{$task_assigned}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body text-center p-4">
+                                        <h5>TASK COMPLETED</h5>
+                                        <h4>{{$task_completed}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body text-center p-4">
+                                        <h5>DUE THIS MONTH</h5>
+                                        <h4>{{$due_this_month}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body text-center p-4">
+                                        <h5>DUE NEXT MONTH</h5>
+                                        <h4>{{$due_next_month}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body text-center p-4">
+                                        <h5>DUE THIS YEAR</h5>
+                                        <h4>{{$due_this_year}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body text-center p-4">
+                                        <h5>DUE NEXT YEAR</h5>
+                                        <h4>{{$due_next_year}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -143,39 +194,28 @@
     var myLine = new Chart(ctx, config);
 </script>
 <script>
-    var ctx = document.getElementById("tasks").getContext('2d');
-    var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: {!! $tasks_label !!},
-        datasets: {!! json_encode($tasks) !!},
+var xValues = {!! json_encode($tasks_label) !!};
+var yValues = {!! json_encode($tasks) !!};
+var barColors = "#2BC155";
+
+new Chart("tasks", {
+  type: "bar",
+  data: {
+    labels: xValues,
+      datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {
+        display: false
     },
-    options: {
-        tooltips: {
-        displayColors: true,
-        callbacks:{
-            mode: 'x',
-        },
-        },
-        scales: {
-        xAxes: [{
-            stacked: true,
-            gridLines: {
-            display: false,
-            }
-        }],
-        yAxes: [{
-            stacked: true,
-            ticks: {
-            beginAtZero: true,
-            },
-            type: 'linear',
-        }]
-        },
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: { position: 'bottom' },
+    title: {
+      display: true,
+      text: "Task Overview"
     }
-    });
+  }
+});
 </script>
 @stop
