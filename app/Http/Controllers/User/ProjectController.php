@@ -38,7 +38,7 @@ class ProjectController extends Controller
         StatusChartService $status_chart,
         PriorityChartService $priority_chart,
         ComplexityChartService $complexity_chart,
-        GanttChartService $gantt_chart,
+        GanttChartService $gantt_chart
     ){
         $this->project = $project;
         $this->income_expense_chart = $income_expense_chart;
