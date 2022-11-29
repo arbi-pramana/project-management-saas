@@ -9,6 +9,7 @@ use App\Http\Controllers\User\RegisterController;
 use App\Http\Controllers\User\ClientController;
 use App\Http\Controllers\User\ProjectController;
 use App\Http\Controllers\User\ExpenseController;
+use App\Http\Controllers\user\ForgotPasswordController;
 use App\Http\Controllers\User\IncomeController;
 use App\Http\Controllers\User\MilestoneController;
 use App\Http\Controllers\User\PlanController;
@@ -40,6 +41,10 @@ Route::post('auth',LoginController::class.'@auth')->name('users.auth');
 Route::get('register',RegisterController::class.'@register')->name('users.register.index');
 Route::post('register/store',RegisterController::class.'@store')->name('users.register.store');
 Route::get('verify',RegisterController::class.'@verify')->name('users.register.verify');
+Route::get('forgot-password',ForgotPasswordController::class.'@index')->name('users.forgot-password.index');
+Route::post('forgot-password/store',ForgotPasswordController::class.'@store')->name('users.forgot-password.store');
+Route::get('forgot-password/new-password',ForgotPasswordController::class.'@newPassword')->name('users.forgot-password.newPassword');
+Route::post('forgot-password/store-new-password',ForgotPasswordController::class.'@storeNewPassword')->name('users.forgot-password.storeNewPassword');
 
 Route::group(['middleware'=>'users.auth','prefix'=>'users'],function(){
     Route::get('logout',LoginController::class.'@logout')->name('users.logout');
