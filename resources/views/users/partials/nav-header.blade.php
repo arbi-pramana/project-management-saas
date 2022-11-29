@@ -1,5 +1,5 @@
 <div class="nav-header">
-    <a href="index.html" class="brand-logo">
+    <a href="#" class="brand-logo">
         <img class="logo-abbr" src="{{asset('acara/images/logo.png')}}" alt="">
         <img class="logo-compact" src="{{asset('acara/images/logo-text.png')}}" alt="">
         <img class="brand-title" src="{{asset('acara/images/logo-text.png')}}" alt="">
