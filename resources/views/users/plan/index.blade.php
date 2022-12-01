@@ -30,9 +30,12 @@
                                     <a href="{{$plan->url}}" class="btn btn-secondary"><i class="fa fa-check"></i> Selected </a>
                                 </div>
                             @else
+                                @if($plan->id == 1)
+                                @else
                                 <div class="text-center mt-4">
                                     <a href="{{$plan->url}}" class="btn btn-success"><i class="fa fa-tags"></i> Upgrade Plan</a>
                                 </div>
+                                @endif
                             @endif
                         </div>
                     </div>
