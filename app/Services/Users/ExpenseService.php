@@ -2,6 +2,7 @@
 namespace App\Services\Users;
 
 use App\Models\Expense;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class ExpenseService{
@@ -28,5 +29,14 @@ class ExpenseService{
         $expense->project_id = $request->project_id;
         $expense->create_by = Auth::guard('users')->id();
         $expense->save();
+    }
+
+    public function maximum()
+    {
+        $user = User::find(Auth::guard('users')->id());
+        $expense = Expense::where('create_by',Auth::guard('users')->id())->count();
+        if($expense >= $user->user_plan->max_expenses && $expense != 0){
+            return true;
+        }
     }
 }

@@ -31,9 +31,6 @@ class EmployeeController extends Controller
 
     public function store(Request $request)
     {
-        if($this->maximum()){
-            return redirect()->back()->with('danger','Your Employee is Maximum, Please Updgrade Your Plan');
-        };
         $this->employee->store($request);
         return redirect()->back()->with('success','Data has been Added');
     }
@@ -58,12 +55,5 @@ class EmployeeController extends Controller
         return redirect()->back()->with('danger','Data has been Deleted');
     }
 
-    public function maximum()
-    {
-        $user = User::find(Auth::guard('users')->id());
-        $employee = Employee::where('create_by',Auth::guard('users')->id())->count();
-        if($employee >= $user->user_plan->max_employees && $employee != 0){
-            return true;
-        }
-    }
+    
 }

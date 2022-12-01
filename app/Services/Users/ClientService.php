@@ -2,6 +2,7 @@
 namespace App\Services\Users;
 
 use App\Models\Client;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class ClientService{
@@ -29,5 +30,14 @@ class ClientService{
         $client->phone = $request->phone;
         $client->create_by = Auth::guard('users')->id();
         $client->save();
+    }
+
+    public function maximum()
+    {
+        $user = User::find(Auth::guard('users')->id());
+        $client = Client::where('create_by',Auth::guard('users')->id())->count();
+        if($client >= $user->user_plan->max_clients && $client != 0){
+            return true;
+        }
     }
 }

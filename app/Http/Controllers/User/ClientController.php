@@ -26,7 +26,7 @@ class ClientController extends Controller
 
     public function store(Request $request)
     {
-        if($this->maximum()){
+        if($this->client->maximum()){
             return redirect()->back()->with('danger','Your Client is Maximum, Please Updgrade Your Plan');
         };
         $this->client->store($request);
@@ -49,12 +49,5 @@ class ClientController extends Controller
         return redirect()->back()->with('danger','Data has been Deleted');
     }
 
-    public function maximum()
-    {
-        $user = User::find(Auth::guard('users')->id());
-        $client = Client::where('create_by',Auth::guard('users')->id())->count();
-        if($client >= $user->user_plan->max_clients && $client != 0){
-            return true;
-        }
-    }
+    
 }

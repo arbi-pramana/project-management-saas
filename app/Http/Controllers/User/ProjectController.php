@@ -71,7 +71,7 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-        if($this->maximum()){
+        if($this->project->maximum()){
             return redirect()->back()->with('danger','Your Project is Maximum, Please Updgrade Your Plan');
         };
         $this->project->store($request);
@@ -94,12 +94,5 @@ class ProjectController extends Controller
         return redirect('users/project')->with('danger','Data has been Deleted');
     }
 
-    public function maximum()
-    {
-        $user = User::find(Auth::guard('users')->id());
-        $project = Project::where('create_by',Auth::guard('users')->id())->count();
-        if($project >= $user->user_plan->max_projects && $project != 0){
-            return true;
-        }
-    }
+    
 }

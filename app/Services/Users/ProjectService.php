@@ -8,6 +8,7 @@ use App\Models\Priority;
 use App\Models\Project;
 use App\Models\Status;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class ProjectService{
@@ -67,5 +68,14 @@ class ProjectService{
         $project->plan_hours = $request->plan_hours;
         $project->create_by = Auth::guard('users')->id();
         $project->save();
+    }
+
+    public function maximum()
+    {
+        $user = User::find(Auth::guard('users')->id());
+        $project = Project::where('create_by',Auth::guard('users')->id())->count();
+        if($project >= $user->user_plan->max_projects && $project != 0){
+            return true;
+        }
     }
 }

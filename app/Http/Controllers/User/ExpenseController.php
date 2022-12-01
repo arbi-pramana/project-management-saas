@@ -27,7 +27,7 @@ class ExpenseController extends Controller
 
     public function store(Request $request)
     {
-        if($this->maximum()){
+        if($this->expense->maximum()){
             return redirect()->back()->with('danger','Your Expense is Maximum, Please Updgrade Your Plan');
         };
         $this->expense->store($request);
@@ -46,12 +46,5 @@ class ExpenseController extends Controller
         return redirect()->back()->with('danger','Data has been Deleted');
     }
 
-    public function maximum()
-    {
-        $user = User::find(Auth::guard('users')->id());
-        $expense = Expense::where('create_by',Auth::guard('users')->id())->count();
-        if($expense >= $user->user_plan->max_expenses && $expense != 0){
-            return true;
-        }
-    }
+    
 }

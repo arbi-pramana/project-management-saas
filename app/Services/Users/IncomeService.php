@@ -3,6 +3,7 @@ namespace App\Services\Users;
 
 use App\Models\Expense;
 use App\Models\Income;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class IncomeService{
@@ -29,5 +30,14 @@ class IncomeService{
         $income->project_id = $request->project_id;
         $income->create_by = Auth::guard('users')->id();
         $income->save();
+    }
+
+    public function maximum()
+    {
+        $user = User::find(Auth::guard('users')->id());
+        $income = Income::where('create_by',Auth::guard('users')->id())->count();
+        if($income >= $user->user_plan->max_incomes && $income != 0){
+            return true;
+        }
     }
 }

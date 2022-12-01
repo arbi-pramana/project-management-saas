@@ -27,7 +27,7 @@ class IncomeController extends Controller
 
     public function store(Request $request)
     {
-        if($this->maximum()){
+        if($this->income->maximum()){
             return redirect()->back()->with('danger','Your Income is Maximum, Please Updgrade Your Plan');
         };
         $this->income->store($request);
@@ -46,12 +46,5 @@ class IncomeController extends Controller
         return redirect()->back()->with('danger','Data has been Deleted');
     }
 
-    public function maximum()
-    {
-        $user = User::find(Auth::guard('users')->id());
-        $income = Income::where('create_by',Auth::guard('users')->id())->count();
-        if($income >= $user->user_plan->max_incomes && $income != 0){
-            return true;
-        }
-    }
+    
 }
