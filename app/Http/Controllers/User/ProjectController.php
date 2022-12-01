@@ -58,6 +58,10 @@ class ProjectController extends Controller
 
     public function detail($id)
     {
+        $project = Project::find($id);
+        if($project->create_by != Auth::guard('users')->id()){
+            abort('403');
+        }
         $data = $this->project->detail($id);
         $data['income_expense_chart'] = $this->income_expense_chart->chart($id); 
         $data['hours_chart'] = $this->hours_chart->chart($id); 
