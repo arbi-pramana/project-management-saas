@@ -18,7 +18,6 @@ class PlanController extends Controller
             $q->url = $replace2;
             return $q;
         });
-        dd($data);
         return view('users.plan.index',$data);
     }
 }
