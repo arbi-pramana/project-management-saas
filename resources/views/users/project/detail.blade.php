@@ -230,7 +230,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-body" style="height:600px;overflow-x:scroll">
+                    <div class="card-body" style="height:500px;overflow-y:scroll">
                         <div id="gantt"></div>
                     </div>
                 </div>

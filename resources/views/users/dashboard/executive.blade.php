@@ -144,7 +144,7 @@
                             <option value="Year">Year</option>
                         </select>
                     </div>
-                    <div class="card-body" style="height:600px;overflow-x:scroll">
+                    <div class="card-body" style="height:400px;overflow-y:scroll;">
                         <div id="gantt"></div>
                     </div>
                 </div>
@@ -155,7 +155,7 @@
                         RESOURCE WORKLOAD
                     </div>
                     <div class="card-body">
-                        <canvas id="resource_chart" class="chart-js pt-4" height="300px"></canvas>
+                        <canvas id="resource_chart" class="chart-js pt-4" height="400px"></canvas>
                     </div>
                 </div>
             </div>
@@ -167,7 +167,7 @@
                         PROJECT BUDGET
                     </div>
                     <div class="card-body">
-                        <canvas id="budget_chart" style="height:600px"></canvas>
+                        <canvas id="budget_chart" style="height:400px"></canvas>
                     </div>
                 </div>
             </div>
@@ -179,7 +179,7 @@
                         PROJECT EXPENSE
                     </div>
                     <div class="card-body">
-                        <canvas id="expense_chart" style="height:600px"></canvas>
+                        <canvas id="expense_chart" style="height:400px"></canvas>
                     </div>
                 </div>
             </div>
@@ -191,7 +191,7 @@
                         PLANNED VS HOURS SPENT
                     </div>
                     <div class="card-body">
-                        <canvas id="hours_chart" style="height:600px"></canvas>
+                        <canvas id="hours_chart" style="height:400px"></canvas>
                     </div>
                 </div>
             </div>

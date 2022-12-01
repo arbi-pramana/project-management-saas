@@ -38,7 +38,7 @@ class BudgetChartService{
         $data['label'] = $label->toArray();
 
         foreach($projects as $project){
-            $data['expense'][] = $project->budget-$project->expenses->sum('amount');
+            $data['expense'][] = $project->expenses->sum('amount');
         }
         return $data;
     }
