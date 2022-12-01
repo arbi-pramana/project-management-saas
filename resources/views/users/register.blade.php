@@ -41,13 +41,13 @@
                                             <label class="mb-1 text-white"><strong>Email</strong></label>
                                             <input type="email" class="form-control" name="email" placeholder="hello@example.com" required>
                                         </div>
+                                        @error('email')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                         <div class="form-group">
                                             <label class="mb-1 text-white"><strong>Phone</strong></label>
                                             <input type="text" class="form-control" name="phone" placeholder="+6281212341234" required>
                                         </div>
-                                        @error('email')
-                                            <div class="alert alert-danger">{{ $message }}</div>
-                                        @enderror
                                         <div class="form-group">
                                             <label class="mb-1 text-white"><strong>Password</strong></label>
                                             <input type="password" class="form-control" name="password" value="" required>

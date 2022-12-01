@@ -166,7 +166,7 @@
 <td class="pad">
 <div style="font-family: sans-serif">
 <div class="" style="font-size: 14px; mso-line-height-alt: 16.8px; color: #40507a; line-height: 1.2; font-family: Helvetica Neue, Helvetica, Arial, sans-serif;">
-<p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">Having trouble? <a href="#" rel="noopener" style="text-decoration: none; color: #40507a;" target="_blank" title="@socialaccount"></a><strong>please email support@pimku.com</strong></span></p>
+<p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">Having trouble? <a href="#" rel="noopener" style="text-decoration: none; color: #40507a;" target="_blank" title="@socialaccount"></a><strong>please email support@pimku.my.id</strong></span></p>
 </div>
 </div>
 </td>
