@@ -51,7 +51,7 @@
                         For Dedicated System you can contact us use link below :
                         <br><br>
                         <div class="text-center">
-                            <a href="" class="btn btn-success"><i class="fa fa-phone"></i> Contact Us</a>
+                            <a href="https://api.whatsapp.com/send?phone=6285156585179&text=Halo%2C%20Pimku%20-%20CS%2C%0A%0ASaya%20_nama_%2C%20dengan%20email%20%3A%20_email_%0ASaya%20ingin%20upgrade%20system%20saya%20ke%20*Dedicated%20System*" class="btn btn-success"><i class="fa fa-phone"></i> Contact Us</a>
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                         For Custom System you can contact us use link below :
                         <br><br>
                         <div class="text-center">
-                            <a href="" class="btn btn-success"><i class="fa fa-phone"></i> Contact Us</a>
+                            <a href="https://api.whatsapp.com/send?phone=6285156585179&text=Halo%2C%20Pimku%20-%20CS%2C%0A%0ASaya%20_nama_%2C%20dengan%20email%20%3A%20_email_%0ASaya%20ingin%20upgrade%20system%20saya%20ke%20*Custom%20System*" class="btn btn-success"><i class="fa fa-phone"></i> Contact Us</a>
                         </div>
                     </div>
                 </div>
