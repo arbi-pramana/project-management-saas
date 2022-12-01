@@ -23,7 +23,7 @@
             </li>
             <li><a href="{{route('users.help.index')}}" class="ai-icon" aria-expanded="false">
                     <i class="fa fa-question-circle"></i>
-                    <span class="nav-text">Helps</span>
+                    <span class="nav-text">Help</span>
                 </a>
             </li>
             <li><a href="{{route('users.plan.index')}}" class="ai-icon" aria-expanded="false">
