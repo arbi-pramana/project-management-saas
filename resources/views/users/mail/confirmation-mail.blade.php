@@ -246,7 +246,7 @@
 <td class="pad">
 <div style="font-family: sans-serif">
 <div class="" style="font-size: 14px; mso-line-height-alt: 16.8px; color: #97a2da; line-height: 1.2; font-family: Helvetica Neue, Helvetica, Arial, sans-serif;">
-<p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 16.8px;">This link will expire in the next 24 hours.<br/>Please feel free to contact us at support@pakar-web.com.</p>
+<p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 16.8px;">This link will expire in the next 24 hours.<br/>Please feel free to contact us at support@support@pimku.my.id.</p>
 </div>
 </div>
 </td>
@@ -257,7 +257,7 @@
 <td class="pad">
 <div style="font-family: sans-serif">
 <div class="" style="font-size: 14px; mso-line-height-alt: 16.8px; color: #97a2da; line-height: 1.2; font-family: Helvetica Neue, Helvetica, Arial, sans-serif;">
-<p style="margin: 0; text-align: center; font-size: 12px; mso-line-height-alt: 14.399999999999999px;"><span style="font-size:12px;">© 2022 Pimku - Project Management Apps. Designed & Developed by <strong><a href="https://pakar-web.com" rel="noopener" style="text-decoration: underline; color: #97a2da;" target="_blank">pakar-web.com</a></strong></span></p>
+<p style="margin: 0; text-align: center; font-size: 12px; mso-line-height-alt: 14.399999999999999px;"><span style="font-size:12px;">© 2022 Pimku - Project Management Tools. Designed & Developed by <strong><a href="https://pakar-web.com" rel="noopener" style="text-decoration: underline; color: #97a2da;" target="_blank">pakar-web.com</a></strong></span></p>
 </div>
 </div>
 </td>
