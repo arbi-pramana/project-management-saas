@@ -68,14 +68,9 @@ class HomeController extends Controller
 
     public function executive(Request $request)
     {
-        $data['years'] = Project::where('create_by',Auth::guard('users')->id())
-            ->get()
-            ->pluck('start_date')
-            ->unique()
-            ->map(function($q){
-                return date("Y",strtotime($q));
-            });
-
+        
+        $data['start_year'] = date('Y')-10;
+        $data['end_year'] = date('Y')+3; 
         $data['count_projects'] = Project::where('create_by',Auth::guard('users')->id())->where("start_date",'like',"%".$request->year."%")->count();
         $data['count_client'] = Client::where('create_by',Auth::guard('users')->id())->where("created_at",'like',"%".$request->year."%")->count();
         $data['count_budget'] = Project::where('create_by',Auth::guard('users')->id())->where("start_date",'like',"%".$request->year."%")->sum('budget');

@@ -14,9 +14,9 @@
                     <div class="form-inline" style="float:right;">
                         <select name="year" class="form-control" style="width:300px;">
                             <option value="">All</option>
-                            @foreach($years as $year)
-                                <option value="{{$year}}" @if(request('year') == $year) selected="selected" @endif>{{$year}}</option>
-                            @endforeach
+                            @for($i=$end_year;$i>=$start_year;$i--)
+                                <option value="{{$i}}" @if(request('year') == $i) selected="selected" @endif>{{$i}}</option>
+                            @endfor
                         </select>
                         <button class="btn btn-success ml-2">Filter</button>
                     </div>
