@@ -2,7 +2,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Acara - Ticketing Bootstrap Admin Dashboard</title>
+    <title>Pimku - Project Management SAAS</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{('acara/images/favicon.png')}}">
 	<link rel="stylesheet" href="{{url('acara/vendor/chartist/css/chartist.min.css')}}">

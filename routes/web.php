@@ -13,6 +13,7 @@ use App\Http\Controllers\user\ForgotPasswordController;
 use App\Http\Controllers\User\IncomeController;
 use App\Http\Controllers\User\MilestoneController;
 use App\Http\Controllers\User\PlanController;
+use App\Http\Controllers\User\HelpController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\TaskController;
 use Illuminate\Support\Facades\Route;
@@ -50,6 +51,7 @@ Route::group(['middleware'=>'users.auth','prefix'=>'users'],function(){
     Route::get('logout',LoginController::class.'@logout')->name('users.logout');
     Route::get('profile',ProfileController::class.'@index')->name('users.profile.index');
     Route::put('profile',ProfileController::class.'@update')->name('users.profile.update');
+    Route::get('help',HelpController::class.'@index')->name('users.help.index');
     Route::get('plan',PlanController::class.'@index')->name('users.plan.index');
     Route::get('resources-dashboard',HomeController::class.'@resources')->name('users.dashboard.resources');
     Route::get('executive-dashboard',HomeController::class.'@executive')->name('users.dashboard.executive');

@@ -21,6 +21,11 @@
                     <span class="nav-text">Clients</span>
                 </a>
             </li>
+            <li><a href="{{route('users.help.index')}}" class="ai-icon" aria-expanded="false">
+                    <i class="fa fa-question-circle"></i>
+                    <span class="nav-text">Helps</span>
+                </a>
+            </li>
             <li><a href="{{route('users.plan.index')}}" class="ai-icon" aria-expanded="false">
                     <i class="flaticon-381-bookmark"></i>
                     <span class="nav-text">Plan</span>
