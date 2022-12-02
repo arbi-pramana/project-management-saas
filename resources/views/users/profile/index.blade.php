@@ -9,6 +9,15 @@
             </ol>
         </div>
         <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <b>Your Plan is Valid Until :</b> {{date("d F Y",strtotime($user->plan_expire_date))}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
